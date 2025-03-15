@@ -14,7 +14,9 @@ npm install
 ```
 To run the application:
 ```bash
-npm run start
+
+npm start
+npm run electron
 ```
 
 ## Development
