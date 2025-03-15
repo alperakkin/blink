@@ -5,7 +5,7 @@
   "main": "./src/main.js",
   "scripts": {
     "start": "webpack serve --mode development",
-    "electron": "electron .",
+    "electron": "electron . --disable-gpu",
     "build": "webpack"
   },
   "repository": {
