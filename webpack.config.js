@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
 module.exports = {
     entry: './src/renderer.js',
     output: {
@@ -36,8 +36,12 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/public/index.html',
         }),
+        new MonacoWebpackPlugin({
+            languages: ["javascript", "typescript", "json", "html", "css"],
+        }),
     ],
     devServer: {
         static: './dist',
     },
 };
+
