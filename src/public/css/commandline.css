@@ -1,0 +1,25 @@
+.command-form{
+    display: flex;
+    bottom: 0;
+    background-color: #222;
+    padding: 10px;
+    border-radius: 5px;
+
+  }
+
+
+  .command-image{
+      color: #ffffff;
+      margin-right: 5px;
+      font-weight: bold;
+      height: 35px;
+    }
+
+input {
+    border-radius: 5px;
+    width: 80%;
+    padding: 8px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+}

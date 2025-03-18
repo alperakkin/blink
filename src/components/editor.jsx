@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import * as monaco from "monaco-editor";
 import CommandLine from "./modules/command";
+import SideBar from "./modules/sidebar";
 import "../public/css/editor.css";
 
 const Editor = () => {
@@ -28,6 +29,7 @@ const Editor = () => {
   return (
     <div className="container">
       <div className="editor">
+        <SideBar />
         <div className="code-editor" ref={editorRef} />
       </div>
       <div className="command-line-container">

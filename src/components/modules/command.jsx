@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import "../../public/css/commandline.css";
+import logo from "../../public/image/logo.png";
 const CommandLine = ({ onCommandSubmit }) => {
   const [command, setCommand] = useState("");
 
@@ -12,37 +13,14 @@ const CommandLine = ({ onCommandSubmit }) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        position: "fixed",
-        bottom: 0,
-        width: "99%",
-        backgroundColor: "#222",
-        padding: "10px",
-      }}
-    >
-      <label
-        style={{
-          color: "#ffffff",
-          marginRight: "5px",
-          fontWeight: "bold",
-        }}
-      >
-        >
-      </label>
+    <form className="command-form" onSubmit={handleSubmit}>
+      <img className="command-image" src={logo} />
+
       <input
         type="text"
         value={command}
         onChange={(e) => setCommand(e.target.value)}
         placeholder="Enter a command"
-        style={{
-          width: "80%",
-          padding: "8px",
-          backgroundColor: "#333",
-          color: "#fff",
-          border: "none",
-        }}
       />
     </form>
   );

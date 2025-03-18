@@ -1,6 +1,20 @@
 
+.editor {
+    display: flex;
+    height: 100vh;
+}
+
 .code-editor{
-    position: fixed;
-    width: 100%;
+    position: relative;
+    width: 80%;
     height: 100%;
 }
+
+.sidebar {
+    width: 250px;
+    background-color: rgb(40, 41, 40);
+    padding: 10px;
+    box-sizing: border-box;
+    height: 100%;
+}
+
