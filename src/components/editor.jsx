@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from "react";
 import * as monaco from "monaco-editor";
 import CommandLine from "./modules/command";
+import "../public/css/editor.css";
+
 const Editor = () => {
   const editorRef = useRef(null);
   let editor = null;
@@ -26,7 +28,7 @@ const Editor = () => {
   return (
     <div className="container">
       <div className="editor">
-        <div ref={editorRef} style={{ width: "100%", height: "500px" }} />
+        <div className="code-editor" ref={editorRef} />
       </div>
       <div className="command-line-container">
         <CommandLine id="cmd" onCommandSubmit={handleCommandSubmit} />
