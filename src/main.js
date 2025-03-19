@@ -1,16 +1,26 @@
-const { app, BrowserWindow } = require('electron');
+require('dotenv').config();
+
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const fs = require("fs");
+const { promisify } = require("util");
+const readdir = promisify(fs.readdir);
+
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
+      contextIsolation: true,
+      enableRemoteModule: false
     },
+    icon: path.join(__dirname, 'public/image/logo.png')
   });
 
-  win.loadURL('http://localhost:8080');
+  win.loadURL(process.env.API_URL);
 }
 
 app.whenReady().then(() => {
@@ -27,5 +37,29 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
+  }
+});
+
+ipcMain.handle("read-directory", async (_, dirPath) => {
+  console.log(`📂 IPC Main: Reading Folder -> ${dirPath}`);
+
+  try {
+    const files = await readdir(dirPath);
+    const fileDetails = files
+      .filter(file => !file.startsWith("."))
+      .map((file) => {
+        const fullPath = path.join(dirPath, file);
+        const stats = fs.statSync(fullPath);
+        return {
+          name: file,
+          isDirectory: stats.isDirectory(),
+        };
+      });
+
+    console.log("📂 Found:", fileDetails);
+    return fileDetails;
+  } catch (error) {
+    console.error("🚨 Folder Read Error:", error.message);
+    return { error: error.message };
   }
 });

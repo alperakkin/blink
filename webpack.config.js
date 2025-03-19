@@ -1,6 +1,16 @@
+const dotenv = require('dotenv');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
+
+const env = dotenv.config().parsed;
+
+
+const definePluginEnv = Object.keys(env).reduce((acc, key) => {
+    acc[`process.env.${key}`] = JSON.stringify(env[key]);
+    return acc;
+}, {});
+
 module.exports = {
     entry: './src/renderer.js',
     output: {
@@ -33,7 +43,7 @@ module.exports = {
                     {
                         loader: 'file-loader',
                         options: {
-                            name: '[path][name].[ext]', // Resmin adı ve yolu korunur
+                            name: '[path][name].[ext]',
                         },
                     },
                 ],
