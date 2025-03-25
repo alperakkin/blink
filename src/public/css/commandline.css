@@ -1,14 +1,22 @@
+.command-line-container {
+    display: flex;
+    flex-direction: row;
+    height: 7%;
+    width: 100%;
+    justify-content: flex-end;
+    z-index: 1000;
+}
+
 .command-form{
     display: flex;
     bottom: 0;
     background-color: #222;
     padding: 10px;
-    border-radius: 5px;
+    width: 100%;
 
   }
 
-
-  .command-image{
+.command-image{
       color: #ffffff;
       margin-right: 5px;
       font-weight: bold;
@@ -17,9 +25,12 @@
 
 input {
     border-radius: 5px;
-    width: 80%;
+    width: 100%;
     padding: 8px;
     background-color: #333;
     color: #fff;
     border: none;
 }
+input:focus {
+    outline: none;
+  }

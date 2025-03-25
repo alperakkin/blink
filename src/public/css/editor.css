@@ -1,20 +1,36 @@
+* {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+  }
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+}
 
 .editor {
     display: flex;
-    height: 100vh;
+    flex:1;
+
 }
 
 .code-editor{
-    position: relative;
-    width: 80%;
+    display: flex;
+    flex: 1;
     height: 100%;
 }
 
 .file-manager {
-    width: 250px;
     background-color: rgb(40, 41, 40);
-    padding: 10px;
-    box-sizing: border-box;
+    width: 250px;
     height: 100%;
 }
 

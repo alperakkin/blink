@@ -27,13 +27,13 @@ const FileManager = () => {
   };
 
   return (
-    <div>
+    <div className="file-manager">
       <input
         type="text"
         value={path}
         onChange={(e) => setPath(e.target.value)}
       />
-      <button onClick={() => loadFiles(path)}>Load</button>
+
       {!isElectron && <p>.</p>}
       <ul>
         {files.map((file) => (
