@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from "react";
-
 const FileManager = ({ files = [] }) => {
   return (
     <div className="file-manager">

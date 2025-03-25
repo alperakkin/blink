@@ -26,7 +26,6 @@ class Parser {
     };
 
     gotoFolder(path) {
-        console.log("🚀 setFiles fonksiyonu Parser içinde:", this.setFiles);
         loadFiles(path, this.setFiles);
     }
 }
