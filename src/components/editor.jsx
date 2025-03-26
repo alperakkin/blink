@@ -9,6 +9,7 @@ const Editor = () => {
   const editorRef = useRef(null);
   const parserRef = useRef(null);
   const [files, setFiles] = useState([]);
+  const [parserInstance, setParserInstance] = useState(null);
 
   useEffect(() => {
     if (!editorRef.current) return;
@@ -25,6 +26,7 @@ const Editor = () => {
   useEffect(() => {
     if (editorRef.current) {
       parserRef.current = new Parser(editorRef.current, setFiles);
+      setParserInstance(parserRef.current);
     }
   }, []);
 
@@ -37,6 +39,7 @@ const Editor = () => {
       <div className="command-line-container">
         <CommandLine
           id="cmd"
+          parser={parserInstance}
           onCommandSubmit={(cmd) => parserRef.current?.handleCommandSubmit(cmd)}
         />
       </div>
