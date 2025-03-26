@@ -1,9 +1,10 @@
 import { loadFiles } from "../libs/utils";
-
+import path from 'path-browserify';
 class Parser {
     constructor(editor, setFiles) {
         this.editor = editor;
         this.setFiles = setFiles;
+        this.cwd = "/";
 
 
         this.keys = {
@@ -25,8 +26,12 @@ class Parser {
         this.parseCmd(cmd);
     };
 
-    gotoFolder(path) {
-        loadFiles(path, this.setFiles);
+    gotoFolder(userPath) {
+        let newPath = path.isAbsolute(userPath)
+            ? userPath : path.join(this.cwd, userPath);
+
+        loadFiles(newPath, this.setFiles);
+        this.cwd = newPath;
     }
 }
 

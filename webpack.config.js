@@ -52,13 +52,17 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.jsx', '.css'],
+        fallback: {
+            path: require.resolve('path-browserify')
+        }
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/public/index.html',
         }),
         new MonacoWebpackPlugin({
-            languages: ["javascript", "typescript", "json", "html", "css"],
+            languages: ["javascript", "typescript", "json", "html", "css",
+                "python"],
         }),
     ],
     devServer: {

@@ -1,3 +1,4 @@
+import React from "react";
 const FileManager = ({ files = [] }) => {
   return (
     <div className="file-manager">
