@@ -48,7 +48,12 @@ module.exports = {
                     },
                 ],
             },
+            {
+                test: /\.svg$/,
+                type: 'asset/resource',
+            },
         ],
+
     },
     resolve: {
         extensions: ['.js', '.jsx', '.css'],
