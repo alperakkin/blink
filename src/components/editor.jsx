@@ -33,7 +33,7 @@ const Editor = () => {
   return (
     <div className="container">
       <div className="editor">
-        <FileManager files={files} />
+        <FileManager files={files} parser={parserInstance} />
         <div className="code-editor" ref={editorRef} />
       </div>
       <div className="command-line-container">
