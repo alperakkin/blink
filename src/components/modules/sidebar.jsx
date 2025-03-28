@@ -17,7 +17,7 @@ const FileManager = ({ files = [] }) => {
       {files.length > 0 ? (
         <ul>
           {files.map((file) => (
-            <li key={file.name}>
+            <li className="file-item" key={file.name}>
               {getFileIcon(file)} {file.name}
             </li>
           ))}
