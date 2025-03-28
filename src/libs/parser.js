@@ -7,6 +7,7 @@ class Parser {
         this.editor = editor;
         this.setFiles = setFiles;
         this.cwd = "/";
+        this.prevCwd = null;
         this.history = [];
         this.historyCursor = -1;
 
@@ -39,7 +40,7 @@ class Parser {
                 if (this.historyCursor < this.history.length - 1) {
                     this.historyCursor++;
                 } else {
-                    this.historyCursor = -1;
+                    this.historyCursor = this.history.length - 1;
                     return "";
                 }
                 break
@@ -67,11 +68,13 @@ class Parser {
     };
 
     gotoFolder(userPath) {
+        if (userPath === ".." && this.prevCwd !== this.cwd) this.prevCwd = this.cwd;
         let newPath = path.isAbsolute(userPath)
             ? userPath : path.join(this.cwd, userPath);
 
         loadFiles(newPath, this.setFiles);
         this.cwd = newPath;
+
     }
 }
 

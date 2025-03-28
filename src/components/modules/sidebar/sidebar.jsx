@@ -1,8 +1,7 @@
 import React from "react";
-import "../../public/css/sidebar.css";
-import fileIcons from "../../libs/fileicons";
-import openFolder from "../../public/icons/openFolder.svg";
-import arrow from "../../public/icons/arrow.svg";
+import "public/css/sidebar.css";
+import fileIcons from "libs/fileicons";
+import renderFolderExplorer from "./folderbrowser";
 
 const FileManager = ({ files = [], parser }) => {
   const getFileIcon = (file) => {
@@ -20,7 +19,7 @@ const FileManager = ({ files = [], parser }) => {
       <li
         className="file-item"
         key={file.name}
-        onClick={() => parser.gotoFolder(file.name)}
+        onClick={() => parser.handleCommandSubmit(`cd ${file.name}`)}
       >
         {getFileIcon(file)} {file.name}{" "}
       </li>
@@ -28,14 +27,7 @@ const FileManager = ({ files = [], parser }) => {
   };
   return (
     <div className="file-manager">
-      <div className="file-browser-panel">
-        <div className="explorer">EXPLORER</div>
-        <div>
-          <img className="browser-element open-folder" src={openFolder} />
-        </div>
-        <img className="browser-element prev-folder" src={arrow} />
-        <img className="browser-element next-folder" src={arrow} />
-      </div>
+      <div>{renderFolderExplorer(parser)}</div>
       <div className="file-list-container">
         {files.length > 0 ? (
           <ul className="file-list">

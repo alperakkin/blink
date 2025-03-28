@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import * as monaco from "monaco-editor";
-import CommandLine from "./modules/command";
-import FileManager from "./modules/sidebar";
-import "../public/css/editor.css";
-import Parser from "../libs/parser";
+import CommandLine from "components/modules/command";
+import FileManager from "components/modules/sidebar/sidebar";
+import "public/css/editor.css";
+import Parser from "libs/parser";
 
 const Editor = () => {
   const editorRef = useRef(null);
@@ -14,7 +14,7 @@ const Editor = () => {
   useEffect(() => {
     if (!editorRef.current) return;
     editorRef.current = monaco.editor.create(editorRef.current, {
-      value: "// Write your code here",
+      value: "",
       language: "plaintext",
       theme: "vs-dark",
       automaticLayout: true,

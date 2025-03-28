@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../../public/css/commandline.css";
-import logo from "../../public/image/logo.png";
+import "public/css/commandline.css";
+import logo from "public/image/logo.png";
 
 const CommandLine = ({ onCommandSubmit, parser }) => {
   const [command, setCommand] = useState("");
