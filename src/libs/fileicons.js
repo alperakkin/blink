@@ -7,7 +7,7 @@ const importAll = (r) => {
     });
     return icons;
 };
-let fileIcons = importAll(require.context("../public/icons", false, /\.svg$/));
+let fileIcons = importAll(require.context("../public/icons/extensions", false, /\.svg$/));
 let defaults = {
 
     "defaultFile": "📄",

@@ -1,13 +1,65 @@
-img{
+.file-icon{
     height: 16px;
+    object-fit: contain;
+}
+
+.file-manager {
+    background-color: rgb(40, 41, 40);
+    width: 250px;
+    height: 100%;
 }
 
 .file-item {
-    color: white;
+    color: rgb(178, 178, 178);
     font-family: 'Roboto', sans-serif;
-    font-size: 12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    align-items: left;
 
 }
+
+.file-list-container {
+    justify-content: left;
+}
+
+.file-list {
+    padding-left: 3px;;
+}
+
+.file-browser-panel {
+    height: 5%;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 0 10px;
+    background-color: rgb(29, 32, 30);
+
+}
+
+.browser-element {
+    display: flex;
+    width: 18px;
+    height: 18px;
+
+
+}
+
+.file-item:hover {
+    filter: sepia(1) saturate(2) hue-rotate(350deg);
+}
+.browser-element:hover {
+    filter: sepia(2) saturate(4) hue-rotate(320deg);
+}
+.prev-folder {
+    transform: scaleX(-1);
+}
+
+.explorer {
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    margin-right: 45px;
+    font-size: 12px;
+
+}
+

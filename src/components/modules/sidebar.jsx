@@ -1,13 +1,15 @@
 import React from "react";
 import "../../public/css/sidebar.css";
 import fileIcons from "../../libs/fileicons";
+import openFolder from "../../public/icons/openFolder.svg";
+import arrow from "../../public/icons/arrow.svg";
 
 const FileManager = ({ files = [], parser }) => {
   const getFileIcon = (file) => {
     if (file.isDirectory) return fileIcons["defaultFolder"];
     const ext = file.name.split(".").pop()?.toLowerCase() || "";
     return fileIcons[ext] ? (
-      <img src={fileIcons[ext]} className="w-6 h-6" />
+      <img src={fileIcons[ext]} className="file-icon" />
     ) : (
       fileIcons["defaultFile"]
     );
@@ -26,11 +28,23 @@ const FileManager = ({ files = [], parser }) => {
   };
   return (
     <div className="file-manager">
-      {files.length > 0 ? (
-        <ul>{files.map((file) => renderFiles(file))}</ul>
-      ) : (
-        <p onClick={() => parser.gotoFolder("/")}>📂</p>
-      )}
+      <div className="file-browser-panel">
+        <div className="explorer">EXPLORER</div>
+        <div>
+          <img className="browser-element open-folder" src={openFolder} />
+        </div>
+        <img className="browser-element prev-folder" src={arrow} />
+        <img className="browser-element next-folder" src={arrow} />
+      </div>
+      <div className="file-list-container">
+        {files.length > 0 ? (
+          <ul className="file-list">
+            {files.map((file) => renderFiles(file))}
+          </ul>
+        ) : (
+          <p onClick={() => parser.gotoFolder("/")}></p>
+        )}
+      </div>
     </div>
   );
 };
