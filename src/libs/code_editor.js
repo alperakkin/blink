@@ -47,9 +47,32 @@ class CodeEditor {
     openFileHandler(filePath, source) {
         const fileName = path.basename(filePath);
         const ext = path.extname(filePath);
-        self.activeFile = filePath;
+        this.activeFile = fileName;
         this.setLanguage(ext);
         this.editor.getModel().setValue(source);
+
+    }
+
+    deleteFileHandler(cwd, filePath = null) {
+        filePath = filePath == null ? this.activeFile : filePath;
+        if (!filePath) return;
+        const fullPath = path.join(cwd, filePath);
+        if (path.extname(fullPath)) {
+            window.electron.deleteFile(fullPath);
+
+        }
+        else {
+            window.electron.deleteFolder(fullPath);
+        }
+    }
+
+    saveFileHandler(cwd, filePath = null) {
+
+        filePath = filePath == null ? this.activeFile : filePath;
+        if (!filePath) return;
+        const fullPath = path.join(cwd, filePath);
+        const source = this.editor.getModel().getValue()
+        window.electron.createFile(fullPath, source);
 
     }
 }

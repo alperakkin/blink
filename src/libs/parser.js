@@ -14,7 +14,10 @@ class Parser {
 
         this.keys = {
             'cd': (path) => this.gotoFolder(path),
-            'open': (path) => this.openFile(path)
+            'open': (path) => this.openFile(path),
+            'new': (path) => this.newFileOrFolder(path),
+            'rm': (path) => this.deleteFileOrFolder(path),
+            'save': (path) => this.saveFile(path)
         }
 
     }
@@ -77,11 +80,42 @@ class Parser {
 
     }
 
+    refresh() {
+        this.gotoFolder(this.cwd);
+    }
+
+    newFileOrFolder(filePath) {
+        const fullPath = path.join(this.cwd, filePath);
+        if (path.extname(fullPath)) {
+            window.electron.createFile(fullPath, "");
+            this.openFile(filePath);
+        }
+        else {
+            window.electron.makeDir(fullPath);
+        }
+
+        this.refresh();
+
+    }
+
+    deleteFileOrFolder(filePath = null) {
+
+        this.codeEditor.deleteFileHandler(this.cwd, filePath)
+        this.refresh();
+
+    }
+
     openFile(filePath) {
-        const fullPath = path.join(this.cwd, filePath)
+        const fullPath = path.join(this.cwd, filePath);
         const source = window.electron.readFile(fullPath);
         this.codeEditor.openFileHandler(fullPath, source);
 
+
+    }
+
+    saveFile(filePath = null) {
+        this.codeEditor.saveFileHandler(this.cwd, filePath);
+        this.refresh();
 
     }
 }

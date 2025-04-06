@@ -11,5 +11,17 @@ contextBridge.exposeInMainWorld("electron", {
     selectFolder: () => ipcRenderer.invoke('select-folder'),
     readFile: (filePath) => {
         return fs.readFileSync(filePath, 'utf-8');
+    },
+    createFile: (filePath, content) => {
+        fs.writeFileSync(filePath, content, "utf-8");
+    },
+    makeDir: (dirPath) => {
+        fs.mkdirSync(dirPath, { recursive: true });
+    },
+    deleteFile: (filePath) => {
+        fs.unlinkSync(filePath);
+    },
+    deleteFolder: (dirPath) => {
+        fs.rmdirSync(dirPath);
     }
 })

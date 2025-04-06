@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "public/css/sidebar.css";
 import fileIcons from "libs/fileicons";
 import renderFolderExplorer from "./folderbrowser";
 
 const FileManager = ({ files = [], parser }) => {
+  const [highlightedFile, setHighlightedFile] = useState(null);
   const getFileIcon = (file) => {
     if (file.isDirectory) return fileIcons["defaultFolder"];
     const ext = file.name.split(".").pop()?.toLowerCase() || "";
@@ -15,14 +16,19 @@ const FileManager = ({ files = [], parser }) => {
   };
 
   const handleFileAndFolders = (file) => {
+    setHighlightedFile(file.name);
+
     if (file.isDirectory) parser.handleCommandSubmit(`cd ${file.name}`);
-    else parser.handleCommandSubmit(`open ${file.name}`);
+    else {
+      parser.handleCommandSubmit(`open ${file.name}`);
+    }
   };
 
   const renderFiles = (file) => {
+    const isHighlighted = highlightedFile === file.name;
     return (
       <li
-        className="file-item"
+        className={`file-item ${isHighlighted ? "highlighted" : ""}`}
         key={file.name}
         onClick={() => handleFileAndFolders(file)}
       >

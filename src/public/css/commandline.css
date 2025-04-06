@@ -17,10 +17,12 @@
   }
 
 .command-image{
-      color: #ffffff;
+      display: relative;
       margin-right: 5px;
       font-weight: bold;
       height: 35px;
+      margin-bottom: 5px;
+
     }
 
 input {
