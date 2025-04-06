@@ -7,4 +7,5 @@ contextBridge.exposeInMainWorld("api", {
 
 contextBridge.exposeInMainWorld("electron", {
     readDirectory: (dirPath) => ipcRenderer.invoke('read-directory', dirPath),
+    selectFolder: () => ipcRenderer.invoke('select-folder'),
 })

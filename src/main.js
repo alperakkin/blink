@@ -1,14 +1,14 @@
 require('dotenv').config();
 
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require("fs");
 const { promisify } = require("util");
 const readdir = promisify(fs.readdir);
 
-
+let win;
 function createWindow() {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
@@ -63,3 +63,11 @@ ipcMain.handle("read-directory", async (_, dirPath) => {
     return { error: error.message };
   }
 });
+
+ipcMain.handle('select-folder', async () => {
+  const result = await dialog.showOpenDialog(win, {
+    properties: ['openDirectory'],
+  });
+  return result.filePaths[0];
+});
+

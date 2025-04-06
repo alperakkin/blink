@@ -16,6 +16,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     align-items: left;
+    margin-left: 10px;
+    margin-bottom: 3px;
 
 }
 
@@ -26,6 +28,7 @@
 .file-list {
     padding-left: 3px;;
 }
+
 
 .file-browser-panel {
     height: 5%;
