@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Editor from './components/editor';
+import Blink from './components/blink';
 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Editor />
+  <Blink />
 );

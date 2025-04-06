@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import CommandLine from "components/modules/command";
 import FileManager from "components/modules/sidebar/sidebar";
-import "public/css/editor.css";
+import "public/css/blink.css";
 import Parser from "libs/parser";
 import CodeEditor from "libs/code_editor";
 import { readJSON } from "../libs/utils";
 
-const Editor = () => {
+const Blink = () => {
   const editorRef = useRef(null);
   const parserRef = useRef(null);
   const [files, setFiles] = useState([]);
@@ -27,7 +27,7 @@ const Editor = () => {
   useEffect(() => {
     if (editorRef?.current) {
       parserRef.current = new Parser(editorRef.current, setFiles);
-      parserRef.current.gotoFolder(readJSON("settings/fileSettings.json").cwd);
+      parserRef.current.gotoFolder(readJSON("fileSettings").cwd);
       setParserInstance(parserRef.current);
     }
   }, []);
@@ -49,4 +49,4 @@ const Editor = () => {
   );
 };
 
-export default Editor;
+export default Blink;

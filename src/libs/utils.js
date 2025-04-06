@@ -9,6 +9,7 @@ export const loadFiles = async (dir, setFiles) => {
 };
 
 export const readJSON = (filePath) => {
+    filePath = `settings/${filePath}.json`;
     const fullPath = path.join(window.electron.basePath(), filePath);
     if (!window.electron.fileExists(fullPath))
         return { cwd: window.electron.homeFolder() };
@@ -16,6 +17,7 @@ export const readJSON = (filePath) => {
 }
 
 export const writeJSON = (filePath, content) => {
+    filePath = `settings/${filePath}.json`;
     const fullPath = path.join(window.electron.basePath(), filePath);
     window.electron.createFile(fullPath, JSON.stringify(content));
 }

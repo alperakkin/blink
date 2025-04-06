@@ -27,6 +27,15 @@
 
 }
 
+.file-item-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 10px;
+
+}
+
+
 .file-list-container {
     display: flex;
     flex-direction: column;

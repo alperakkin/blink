@@ -15,20 +15,20 @@ After cloning the project, install the dependencies:
 ```bash
 npm install
 ```
-To run the application:
+To run the build & run react app:
 ```bash
 
-npm start
+npm run build
+npm run start
+```
+
+Open a new terminal to run the electron app:
+```bash
+
 npm run electron
 ```
 
-## Development
-Use the following command to develop the project:
-```bash
-npm run dev
-```
-
-## Lisans
+## License
 Distributed under GNU GENERAL PUBLIC LICENSE.
 
 

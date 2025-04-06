@@ -78,9 +78,9 @@ class Parser {
         loadFiles(newPath, this.setFiles);
         this.cwd = newPath;
 
-        let settings = readJSON("settings/fileSettings.json");
+        let settings = readJSON("fileSettings");
         settings.cwd = this.cwd;
-        writeJSON("settings/fileSettings.json", settings);
+        writeJSON("fileSettings", settings);
 
     }
 
