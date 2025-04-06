@@ -8,13 +8,9 @@ const importAll = (r) => {
     return icons;
 };
 let fileIcons = importAll(require.context("../public/icons/extensions", false, /\.svg$/));
-let defaults = {
 
-    "defaultFile": "📄",
-    "defaultFolder": "🗂️"
-};
 fileIcons = {
-    ...fileIcons, ...defaults
+    ...fileIcons
 
 };
 

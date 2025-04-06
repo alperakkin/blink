@@ -4,6 +4,7 @@ import FileManager from "components/modules/sidebar/sidebar";
 import "public/css/editor.css";
 import Parser from "libs/parser";
 import CodeEditor from "libs/code_editor";
+import { readJSON } from "../libs/utils";
 
 const Editor = () => {
   const editorRef = useRef(null);
@@ -26,6 +27,7 @@ const Editor = () => {
   useEffect(() => {
     if (editorRef?.current) {
       parserRef.current = new Parser(editorRef.current, setFiles);
+      parserRef.current.gotoFolder(readJSON("settings/fileSettings.json").cwd);
       setParserInstance(parserRef.current);
     }
   }, []);

@@ -23,5 +23,15 @@ contextBridge.exposeInMainWorld("electron", {
     },
     deleteFolder: (dirPath) => {
         fs.rmdirSync(dirPath);
-    }
+    },
+    homeFolder: () => {
+        return process.env.HOME || process.env.USERPROFILE;
+    },
+    basePath: () => {
+        return __dirname;
+    },
+    fileExists: (filePath) => {
+        return fs.existsSync(filePath);
+    },
+
 })

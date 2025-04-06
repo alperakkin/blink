@@ -1,6 +1,7 @@
 .file-icon{
     height: 16px;
-    object-fit: contain;
+    width:16px;
+    margin-right: 8px;
 }
 
 .file-manager {
@@ -20,9 +21,9 @@
     margin-left: 10px;
     margin-bottom: 3px;
     cursor: grab;
-    justify-content: flex-start;
+    justify-content:flex-start;
     display: flex;
-
+    flex-direction: row;
 
 }
 
@@ -42,25 +43,25 @@
   }
 
 
-  .file-list-container::-webkit-scrollbar-track {
+.file-list-container::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
   }
 
 
-  .file-list-container::-webkit-scrollbar-thumb {
+.file-list-container::-webkit-scrollbar-thumb {
     background-color: #888;
     border-radius: 10px;
     border: 3px solid rgba(0, 0, 0, 0.1);
   }
 
 
-  .file-list-container::-webkit-scrollbar-thumb:hover {
+.file-list-container::-webkit-scrollbar-thumb:hover {
     background-color: #555;
   }
 
 
-  .file-list-container::-webkit-scrollbar-button {
+.file-list-container::-webkit-scrollbar-button {
     display: none;
   }
 

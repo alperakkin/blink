@@ -26,6 +26,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
+
   app.setIcon(path.join(__dirname, 'public/image/logo.png'));
 
   app.on('activate', () => {

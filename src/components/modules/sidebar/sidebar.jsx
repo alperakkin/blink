@@ -6,12 +6,13 @@ import renderFolderExplorer from "./folderbrowser";
 const FileManager = ({ files = [], parser }) => {
   const [highlightedFile, setHighlightedFile] = useState(null);
   const getFileIcon = (file) => {
-    if (file.isDirectory) return fileIcons["defaultFolder"];
+    if (file.isDirectory)
+      return <img src={fileIcons["defaultFolder"]} className="file-icon" />;
     const ext = file.name.split(".").pop()?.toLowerCase() || "";
     return fileIcons[ext] ? (
       <img src={fileIcons[ext]} className="file-icon" />
     ) : (
-      fileIcons["defaultFile"]
+      <img src={fileIcons["defaultFile"]} className="file-icon" />
     );
   };
 
@@ -32,7 +33,8 @@ const FileManager = ({ files = [], parser }) => {
         key={file.name}
         onClick={() => handleFileAndFolders(file)}
       >
-        {getFileIcon(file)} {file.name}{" "}
+        {getFileIcon(file)}{" "}
+        {<span className="file-item-text">{file.name}</span>}{" "}
       </li>
     );
   };

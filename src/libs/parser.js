@@ -1,4 +1,4 @@
-import { loadFiles } from "../libs/utils";
+import { loadFiles, writeJSON, readJSON } from "../libs/utils";
 import path from 'path-browserify';
 
 const MAX_HISTORY = 100;
@@ -77,6 +77,10 @@ class Parser {
 
         loadFiles(newPath, this.setFiles);
         this.cwd = newPath;
+
+        let settings = readJSON("settings/fileSettings.json");
+        settings.cwd = this.cwd;
+        writeJSON("settings/fileSettings.json", settings);
 
     }
 
