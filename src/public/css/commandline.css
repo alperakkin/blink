@@ -1,7 +1,7 @@
 .command-line-container {
     display: flex;
-    flex-direction: row;
-    height: 5%;
+    flex-direction: column;
+    height: 2%;
     width: 100%;
     justify-content: flex-end;
     z-index: 1000;
@@ -13,16 +13,15 @@
     background-color: #222;
     padding: 10px;
     width: 100%;
+    min-height: 45px;
+    justify-content: center;
 
   }
 
 .command-image{
-      display: relative;
-      margin-right: 5px;
+      margin-right: 15px;
       font-weight: bold;
-      height: 35px;
-      margin-bottom: 5px;
-
+      height: 30px;
     }
 
 input {
