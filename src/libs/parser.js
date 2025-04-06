@@ -3,8 +3,8 @@ import path from 'path-browserify';
 
 const MAX_HISTORY = 100;
 class Parser {
-    constructor(editor, setFiles) {
-        this.editor = editor;
+    constructor(codeEditor, setFiles) {
+        this.codeEditor = codeEditor;
         this.setFiles = setFiles;
         this.cwd = "/";
         this.prevCwd = null;
@@ -13,7 +13,8 @@ class Parser {
 
 
         this.keys = {
-            'cd': (path) => this.gotoFolder(path)
+            'cd': (path) => this.gotoFolder(path),
+            'open': (path) => this.openFile(path)
         }
 
     }
@@ -59,7 +60,6 @@ class Parser {
 
 
     handleCommandSubmit(cmd) {
-        this.editor.getModel().setValue("");
         this.history.push(cmd);
         if (this.history.length >= MAX_HISTORY)
             this.history = this.history.slice(1, MAX_HISTORY);
@@ -74,6 +74,14 @@ class Parser {
 
         loadFiles(newPath, this.setFiles);
         this.cwd = newPath;
+
+    }
+
+    openFile(filePath) {
+        const fullPath = path.join(this.cwd, filePath)
+        const source = window.electron.readFile(fullPath);
+        this.codeEditor.openFileHandler(fullPath, source);
+
 
     }
 }

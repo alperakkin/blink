@@ -14,12 +14,17 @@ const FileManager = ({ files = [], parser }) => {
     );
   };
 
+  const handleFileAndFolders = (file) => {
+    if (file.isDirectory) parser.handleCommandSubmit(`cd ${file.name}`);
+    else parser.handleCommandSubmit(`open ${file.name}`);
+  };
+
   const renderFiles = (file) => {
     return (
       <li
         className="file-item"
         key={file.name}
-        onClick={() => parser.handleCommandSubmit(`cd ${file.name}`)}
+        onClick={() => handleFileAndFolders(file)}
       >
         {getFileIcon(file)} {file.name}{" "}
       </li>

@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import * as monaco from "monaco-editor";
 import CommandLine from "components/modules/command";
 import FileManager from "components/modules/sidebar/sidebar";
 import "public/css/editor.css";
 import Parser from "libs/parser";
+import CodeEditor from "libs/code_editor";
 
 const Editor = () => {
   const editorRef = useRef(null);
@@ -13,18 +13,18 @@ const Editor = () => {
 
   useEffect(() => {
     if (!editorRef.current) return;
-    editorRef.current = monaco.editor.create(editorRef.current, {
-      value: "",
-      language: "plaintext",
-      theme: "vs-dark",
-      automaticLayout: true,
-    });
 
-    return () => editor.dispose();
+    const codeEditor = new CodeEditor();
+    codeEditor.createNew(editorRef.current);
+    editorRef.current = codeEditor;
+
+    return () => {
+      codeEditor?.dispose(editorRef.current);
+    };
   }, []);
 
   useEffect(() => {
-    if (editorRef.current) {
+    if (editorRef?.current) {
       parserRef.current = new Parser(editorRef.current, setFiles);
       setParserInstance(parserRef.current);
     }

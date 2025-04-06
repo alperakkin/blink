@@ -6,6 +6,7 @@ const fs = require("fs");
 const { promisify } = require("util");
 const readdir = promisify(fs.readdir);
 
+
 let win;
 function createWindow() {
   win = new BrowserWindow({
