@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import CommandLine from "components/modules/command";
 import FileManager from "components/modules/sidebar/sidebar";
+import StatusBar from "./modules/statusbar";
 import "public/css/blink.css";
 import Parser from "libs/parser";
 import CodeEditor from "libs/code_editor";
@@ -44,6 +45,9 @@ const Blink = () => {
           parser={parserInstance}
           onCommandSubmit={(cmd) => parserRef.current?.handleCommandSubmit(cmd)}
         />
+      </div>
+      <div className="status-bar-container">
+        <StatusBar parser={parserInstance} />
       </div>
     </div>
   );

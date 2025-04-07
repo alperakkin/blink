@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require("electron");
 const fs = require('fs');
-
+const path = require("path");
+const simpleGit = require("simple-git");
 contextBridge.exposeInMainWorld("api", {
     log: (message) => console.log(message),
 
@@ -34,4 +35,33 @@ contextBridge.exposeInMainWorld("electron", {
         return fs.existsSync(filePath);
     },
 
-})
+    gitBranch: async (startPath) => {
+
+        let currentPath = startPath;
+
+        function checkGitBranch() {
+            // `.git` klasörünü kontrol et
+            if (fs.existsSync(path.join(currentPath, ".git"))) {
+                const git = simpleGit(currentPath);
+                return git.revparse(["--abbrev-ref", "HEAD"]).then(branch => {
+                    return { branch, repoPath: currentPath };
+                });
+            }
+
+
+            const parentPath = path.dirname(currentPath);
+            if (parentPath === currentPath) {
+
+                return Promise.reject("There is no git repo!");
+            } else {
+                currentPath = parentPath;
+                return checkGitBranch();
+            }
+        }
+
+        return checkGitBranch();
+    }
+});
+
+
+

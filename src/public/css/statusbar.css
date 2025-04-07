@@ -1,0 +1,63 @@
+.status-bar-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-end;
+    z-index: 1100;
+    position: relative;
+
+
+
+
+}
+
+.status-bar {
+    background-color: #148450;
+    display: flex;
+    bottom: 0;
+    height: 20px;
+    width: 100%;
+    z-index: 999;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    padding-left: 10px;
+    align-items: center;
+    gap: 5px;
+    justify-content: space-between;
+  }
+
+.status-cwd {
+
+    padding: 0px 5px 0px 5px;
+    border-right: 1px solid white;
+}
+.status-git {
+
+  padding: 0px 5px 0px 5px;
+  border-left: 1px solid white;
+  margin-right: 5px;
+}
+.status-folder-tree {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+.status-text {
+    padding-top: 2px;
+    display: inline-flex;
+    vertical-align: middle;
+
+  }
+
+.status-git-icon{
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  margin-right: 5px;
+  vertical-align: middle;
+
+}
