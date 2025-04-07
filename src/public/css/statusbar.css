@@ -4,17 +4,14 @@
     width: 100%;
     justify-content: flex-end;
     z-index: 1100;
-    position: relative;
-
-
-
-
+    position: fixed;
+    bottom: 0px;
 }
 
 .status-bar {
     background-color: #148450;
     display: flex;
-    bottom: 0;
+
     height: 20px;
     width: 100%;
     z-index: 999;
