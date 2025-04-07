@@ -3,9 +3,10 @@ import path from 'path-browserify';
 
 const MAX_HISTORY = 100;
 class Parser {
-    constructor(codeEditor, setFiles) {
+    constructor(codeEditor, setFiles, setActiveFile) {
         this.codeEditor = codeEditor;
         this.setFiles = setFiles;
+        this.setActiveFile = setActiveFile;
         this.cwd = "/";
         this.prevCwd = null;
         this.history = [];
@@ -117,6 +118,9 @@ class Parser {
         let data = readJSON("fileSettings");
         data.lastOpenedFile = filePath;
         writeJSON("fileSettings", data);
+        this.setActiveFile(filePath);
+
+
 
 
     }

@@ -12,6 +12,7 @@ const Blink = () => {
   const parserRef = useRef(null);
   const [files, setFiles] = useState([]);
   const [parserInstance, setParserInstance] = useState(null);
+  const [activeFile, setActiveFile] = useState(null);
 
   useEffect(() => {
     if (!editorRef.current) return;
@@ -27,7 +28,11 @@ const Blink = () => {
 
   useEffect(() => {
     if (editorRef?.current) {
-      parserRef.current = new Parser(editorRef.current, setFiles);
+      parserRef.current = new Parser(
+        editorRef.current,
+        setFiles,
+        setActiveFile
+      );
       const settings = readJSON("fileSettings");
       parserRef.current.gotoFolder(settings.cwd);
       parserRef.current.openFile(settings.lastOpenedFile);
@@ -39,7 +44,18 @@ const Blink = () => {
     <div className="container">
       <div className="editor">
         <FileManager files={files} parser={parserInstance} />
-        <div className="code-editor" ref={editorRef} />
+        <div
+          className="code-editor"
+          ref={editorRef}
+          style={{
+            display: activeFile ? "block" : "none",
+          }}
+        />
+        {!activeFile && (
+          <div className="empty-editor-placeholder">
+            <p>Soldan bir dosya seçin ya da yeni bir dosya oluşturun.</p>
+          </div>
+        )}
       </div>
       <div className="command-line-container">
         <CommandLine
