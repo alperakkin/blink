@@ -110,9 +110,13 @@ class Parser {
     }
 
     openFile(filePath) {
+        if (filePath === undefined) return;
         const fullPath = path.join(this.cwd, filePath);
         const source = window.electron.readFile(fullPath);
         this.codeEditor.openFileHandler(fullPath, source);
+        let data = readJSON("fileSettings");
+        data.lastOpenedFile = filePath;
+        writeJSON("fileSettings", data);
 
 
     }

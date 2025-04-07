@@ -28,7 +28,9 @@ const Blink = () => {
   useEffect(() => {
     if (editorRef?.current) {
       parserRef.current = new Parser(editorRef.current, setFiles);
-      parserRef.current.gotoFolder(readJSON("fileSettings").cwd);
+      const settings = readJSON("fileSettings");
+      parserRef.current.gotoFolder(settings.cwd);
+      parserRef.current.openFile(settings.lastOpenedFile);
       setParserInstance(parserRef.current);
     }
   }, []);
