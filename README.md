@@ -1,12 +1,12 @@
 # Blink - Code Editor
 
 
-<p align="center">
-<img src="https://github.com/alperakkin/blink/blob/main/src/public/image/logo.png" style="display: block; margin: auto;" width="50">
-Blink is a lightweight and fast code editor that allows you to perform all operations easily with shortcuts. It is developed using Electron and Monaco Editor.
-</p>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <div>Blink is a lightweight and fast code editor that allows you to perform all operations easily with shortcuts. It is developed using Electron and Monaco Editor.</div>
+</div>
 
-<img src="https://github.com/alperakkin/blink/blob/main/src/public/image/blink.png" style="display: block; margin: auto;" width="400">
+<p align="center">
+<img src="https://github.com/alperakkin/blink/blob/main/src/public/image/blink.png" style="display: block; margin: auto;self-align:center;" width="600">
 </p>
 
 ## Features
