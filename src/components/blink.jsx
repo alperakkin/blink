@@ -6,6 +6,7 @@ import "public/css/blink.css";
 import Parser from "libs/parser";
 import CodeEditor from "libs/code_editor";
 import { readJSON } from "../libs/utils";
+import WelcomeScreen from "./modules/welcome";
 
 const Blink = () => {
   const editorRef = useRef(null);
@@ -51,11 +52,7 @@ const Blink = () => {
             display: activeFile ? "block" : "none",
           }}
         />
-        {!activeFile && (
-          <div className="empty-editor-placeholder">
-            <p>Soldan bir dosya seçin ya da yeni bir dosya oluşturun.</p>
-          </div>
-        )}
+        {!activeFile && <WelcomeScreen />}
       </div>
       <div className="command-line-container">
         <CommandLine
