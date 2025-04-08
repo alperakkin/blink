@@ -2,7 +2,7 @@ import React from "react";
 import EditorLogo from "public/image/logo.png";
 import "public/css/welcome.css";
 
-const WelcomeScreen = () => {
+const WelcomeScreen = (parser) => {
   return (
     <div className="welcome-container">
       <div className="brand-info">

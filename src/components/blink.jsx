@@ -52,7 +52,7 @@ const Blink = () => {
             display: activeFile ? "block" : "none",
           }}
         />
-        {!activeFile && <WelcomeScreen />}
+        {!activeFile && <WelcomeScreen parser={parserInstance} />}
       </div>
       <div className="command-line-container">
         <CommandLine
