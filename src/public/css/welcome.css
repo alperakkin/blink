@@ -66,3 +66,32 @@
 .welcome-actions label:hover {
     color: #d1bc03;
   }
+
+
+.new-file {
+  display: flex;
+  flex-direction: row;
+  align-items: "flex-end";
+
+}
+
+.new-file-label {
+  display:flex;
+  align-self: center;
+  font-size: 16px;
+  margin-right: 20px;
+}
+.new-file-inp {
+  background: none;
+  width: 100px;
+  height:18px;
+  border-bottom: #d1bc03 solid;
+  outline: none;
+  border-radius: 0px;
+  font-size: 16px;
+  top: 6px;
+  position:relative;
+
+
+}
+
