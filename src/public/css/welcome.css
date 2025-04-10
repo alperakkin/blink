@@ -91,7 +91,9 @@
   font-size: 16px;
   top: 6px;
   position:relative;
-
-
 }
 
+.new-file-inp:hover {
+  background: none;
+  border-bottom: #d1bc0388 solid;
+}

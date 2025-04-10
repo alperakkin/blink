@@ -12,7 +12,8 @@ const WelcomeScreen = ({ parser }) => {
     const handleKeyDown = (event) => {
       if (command && event.key == "Enter") {
         setDisplayNewFile("none");
-        console.log("Command is", command);
+        parser.newFileOrFolder(command);
+        setCommand("");
       }
     };
 
@@ -52,8 +53,7 @@ const WelcomeScreen = ({ parser }) => {
           />
         </div>
 
-        <label className="recent-files">Recent Files</label>
-        <label className="recent-folders">Recent Folders</label>
+        <label className="recent-files">Recent</label>
       </div>
     </div>
   );
