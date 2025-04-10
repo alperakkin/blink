@@ -2,8 +2,9 @@ import { loadFiles, writeJSON, readJSON } from "../libs/utils";
 import path from 'path-browserify';
 
 const MAX_HISTORY = 100;
+const MAX_RECENT_FOLDERS = 5;
 class Parser {
-    constructor(codeEditor, setFiles, setActiveFile) {
+    constructor(codeEditor, setFiles, setActiveFile, recentFolders) {
         this.codeEditor = codeEditor;
         this.setFiles = setFiles;
         this.setActiveFile = setActiveFile;
@@ -11,6 +12,7 @@ class Parser {
         this.prevCwd = null;
         this.history = [];
         this.historyCursor = -1;
+        this.recentFolders = recentFolders;
 
 
         this.keys = {
@@ -20,6 +22,8 @@ class Parser {
             'rm': (path) => this.deleteFileOrFolder(path),
             'save': (path) => this.saveFile(path)
         }
+
+
 
     }
 
@@ -89,6 +93,14 @@ class Parser {
         this.gotoFolder(this.cwd);
     }
 
+    addToRecent() {
+        if (this.cwd && !this.recentFolders.includes(this.cwd))
+            this.recentFolders.unshift(this.cwd);
+        if (this.recentFolders.length > MAX_RECENT_FOLDERS)
+            this.recentFolders.pop();
+
+    }
+
     newFileOrFolder(filePath) {
         const fullPath = path.join(this.cwd, filePath);
         if (path.extname(fullPath)) {
@@ -127,11 +139,10 @@ class Parser {
         this.codeEditor.openFileHandler(fullPath, result.source);
 
         settings.lastOpenedFile = filePath;
-        writeJSON("fileSettings", settings);
         this.setActiveFile(filePath);
-
-
-
+        this.addToRecent();
+        settings.recentFolders = this.recentFolders;
+        writeJSON("fileSettings", settings);
 
     }
 

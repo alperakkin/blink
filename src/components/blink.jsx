@@ -28,13 +28,16 @@ const Blink = () => {
   }, []);
 
   useEffect(() => {
+    const settings = readJSON("fileSettings");
+    let recentFolders = [];
+    if (settings.recentFolders) recentFolders = settings.recentFolders;
     if (editorRef?.current) {
       parserRef.current = new Parser(
         editorRef.current,
         setFiles,
-        setActiveFile
+        setActiveFile,
+        recentFolders
       );
-      const settings = readJSON("fileSettings");
       parserRef.current.gotoFolder(settings.cwd);
       parserRef.current.openFile(settings.lastOpenedFile);
       setParserInstance(parserRef.current);

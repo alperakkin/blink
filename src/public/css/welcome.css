@@ -5,7 +5,7 @@
     color: white;
     gap: 2rem;
     font-family: monospace;
-    height: 80vh;
+    height: 90%;
     width: 100%;
   }
 
@@ -50,7 +50,7 @@
   }
 
 .welcome-actions label {
-    color: #5f5f5f;;
+    color: #5f5f5f;
     padding: 0.6rem 1.2rem;
     border-radius: 4px;
     font-size: 0.8rem;
@@ -96,4 +96,44 @@
 .new-file-inp:hover {
   background: none;
   border-bottom: #d1bc0388 solid;
+}
+
+
+.project-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+
+.project-list {
+ display: flex;
+ flex-direction: row;
+}
+
+.project-label {
+  cursor: grab;
+  display: inline-block !important;
+  text-transform: capitalize;
+  width: 100px !important;
+  padding-right: 0px !important;
+  font-size: 14;
+  font-weight: bold;
+  color: white !important;
+}
+
+.project-label:hover {
+  color: #d1bc03 !important;
+}
+.project-path {
+  color: #5f5f5f;
+  cursor: auto;
+  padding-left: 0 !important;
+  align-self: left;
+  font-size: 10px !important;
+
+}
+.project-path:hover {
+  color: #5f5f5f !important;
+
 }
