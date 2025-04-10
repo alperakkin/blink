@@ -11,7 +11,13 @@ contextBridge.exposeInMainWorld("electron", {
     readDirectory: (dirPath) => ipcRenderer.invoke('read-directory', dirPath),
     selectFolder: () => ipcRenderer.invoke('select-folder'),
     readFile: (filePath) => {
-        return fs.readFileSync(filePath, 'utf-8');
+        let exists = fs.existsSync(filePath);
+        source = exists == true ? fs.readFileSync(filePath, 'utf-8') : null;
+
+        return {
+            exists: exists,
+            source: source
+        };
     },
     createFile: (filePath, content) => {
         fs.writeFileSync(filePath, content, "utf-8");
@@ -40,7 +46,6 @@ contextBridge.exposeInMainWorld("electron", {
         let currentPath = startPath;
 
         function checkGitBranch() {
-            // `.git` klasörünü kontrol et
             if (fs.existsSync(path.join(currentPath, ".git"))) {
                 const git = simpleGit(currentPath);
                 return git.revparse(["--abbrev-ref", "HEAD"]).then(branch => {

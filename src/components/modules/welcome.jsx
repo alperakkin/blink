@@ -53,7 +53,9 @@ const WelcomeScreen = ({ parser }) => {
           />
         </div>
 
-        <label className="recent-files">Recent</label>
+        <div className="recent-files">
+          <label>Recent</label>
+        </div>
       </div>
     </div>
   );

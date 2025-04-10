@@ -13,7 +13,9 @@ export const readJSON = (filePath) => {
     const fullPath = path.join(window.electron.basePath(), filePath);
     if (!window.electron.fileExists(fullPath))
         return { cwd: window.electron.homeFolder() };
-    return JSON.parse(window.electron.readFile(fullPath));
+    let result = window.electron.readFile(fullPath);
+    if (!result.exists) return;
+    return JSON.parse(result.source);
 }
 
 export const writeJSON = (filePath, content) => {
