@@ -134,7 +134,6 @@ class Parser {
             this.setActiveFile(null);
             settings.lastOpenedFile = null;
             writeJSON("fileSettings", settings);
-
             return;
         };
 
@@ -157,15 +156,15 @@ class Parser {
     closeFile() {
         let settings = readJSON("fileSettings");
         if (!settings.lastOpenedFile) return;
-        if (this.codeEditor.hasChanged()) {
+        if (this.codeEditor.hasChanged(filePath)) {
             let userResponse = confirm(`Save ${settings.lastOpenedFile}?`);
             if (userResponse == false) return;
         }
         this.saveFile(settings.lastOpenedFile);
-        settings.lastOpenedFile = null;
+        this.codeEditor.closeFileHandler(fullPath)
+        this.setActiveFile(this.codeEditor.activeFile);
+        settings.lastOpenedFile = this.codeEditor.activeFile;
         writeJSON("fileSettings", settings);
-        this.setActiveFile(null);
-
     }
 }
 

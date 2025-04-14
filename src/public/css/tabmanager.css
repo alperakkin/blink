@@ -9,12 +9,38 @@
     height: 40px;
     background-color: rgb(16, 30, 25);
     color: white;
-    align-items: center;
-    justify-content: center;
     display: flex;
-
+    justify-content: flex-start;
   }
 
+  .tab-item {
+    display: flex;
+    cursor: pointer;
+    background-color:rgb(4, 70, 22);
+    color: white;
+    width:100px;
+    height: 80%;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.98);
+    clip-path: polygon(
+      12px 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 12px
+    );
+  }
+
+
+  .tab-item:hover {
+    background-color:rgb(10, 154, 49);
+  }
+
+  .tab-item:active {
+    background-color:rgb(10, 154, 49);
+  }
   .code-editor {
     flex: 1;
     background-color: lightgray;
