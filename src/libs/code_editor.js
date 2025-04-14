@@ -8,6 +8,7 @@ class CodeEditor {
         this.language = "plaintext";
         this.activeFile = null;
         this.lastContent = null;
+        this.tabs = [];
         this.fileTypes = {
             ".js": "javascript",
             ".py": "python",

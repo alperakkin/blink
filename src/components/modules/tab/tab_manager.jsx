@@ -2,6 +2,10 @@ import React, { forwardRef } from "react";
 import "public/css/tabmanager.css";
 
 const TabManager = forwardRef(({ activeFile, parser }, ref) => {
+  const tabItems = () => {
+    return <div className="tab-item">{activeFile}</div>;
+  };
+
   return (
     <div
       className="tab-container"
@@ -9,7 +13,7 @@ const TabManager = forwardRef(({ activeFile, parser }, ref) => {
         display: activeFile ? "block" : "none",
       }}
     >
-      <div className="tab-viewer">Tabs will be rendered here</div>
+      <div className="tab-viewer">{tabItems}</div>
       <div className="code-editor" ref={ref}></div>
     </div>
   );
