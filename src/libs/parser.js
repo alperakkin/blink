@@ -20,7 +20,8 @@ class Parser {
             'open': (path) => this.openFile(path),
             'new': (path) => this.newFileOrFolder(path),
             'rm': (path) => this.deleteFileOrFolder(path),
-            'save': (path) => this.saveFile(path)
+            'save': (path) => this.saveFile(path),
+            'close': () => this.closeFile(),
         }
 
 
@@ -150,6 +151,18 @@ class Parser {
     saveFile(filePath = null) {
         this.codeEditor.saveFileHandler(this.cwd, filePath);
         this.refresh();
+
+    }
+
+    closeFile() {
+        let settings = readJSON("fileSettings");
+        if (!settings.lastOpenedFile) return;
+        let userResponse = confirm(`Save ${settings.lastOpenedFile}?`);
+        if (userResponse == false) return;
+        this.saveFile(settings.lastOpenedFile);
+        settings.lastOpenedFile = null;
+        writeJSON("fileSettings", settings);
+        this.setActiveFile(null);
 
     }
 }
