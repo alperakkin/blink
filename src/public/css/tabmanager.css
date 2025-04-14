@@ -1,0 +1,22 @@
+.tab-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+  }
+
+  .tab-viewer {
+    height: 40px;
+    background-color: rgb(16, 30, 25);
+    color: white;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
+  }
+
+  .code-editor {
+    flex: 1;
+    background-color: lightgray;
+    height: 100%;
+  }
