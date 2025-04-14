@@ -136,6 +136,7 @@ class Parser {
 
             return;
         };
+
         this.codeEditor.openFileHandler(fullPath, result.source);
 
         settings.lastOpenedFile = filePath;
