@@ -7,6 +7,7 @@ class CodeEditor {
         this.theme = "vs-dark";
         this.language = "plaintext";
         this.activeFile = null;
+        this.lastContent = null;
         this.fileTypes = {
             ".js": "javascript",
             ".py": "python",
@@ -21,6 +22,10 @@ class CodeEditor {
         }
     }
 
+    hasChanged() {
+        let currentContent = this.editor.getModel().getValue();
+        return currentContent !== this.lastContent;
+    }
     createNew(domNode) {
         this.editor = monaco.editor.create(domNode, {
             value: "",
@@ -50,6 +55,7 @@ class CodeEditor {
         this.activeFile = fileName;
         this.setLanguage(ext);
         this.editor.getModel().setValue(source);
+        this.lastContent = source;
 
     }
 
@@ -71,8 +77,9 @@ class CodeEditor {
         filePath = filePath == null ? this.activeFile : filePath;
         if (!filePath) return;
         const fullPath = path.join(cwd, filePath);
-        const source = this.editor.getModel().getValue()
+        const source = this.editor.getModel().getValue();
         window.electron.createFile(fullPath, source);
+        this.lastContent = source;
 
     }
 }

@@ -157,8 +157,10 @@ class Parser {
     closeFile() {
         let settings = readJSON("fileSettings");
         if (!settings.lastOpenedFile) return;
-        let userResponse = confirm(`Save ${settings.lastOpenedFile}?`);
-        if (userResponse == false) return;
+        if (this.codeEditor.hasChanged()) {
+            let userResponse = confirm(`Save ${settings.lastOpenedFile}?`);
+            if (userResponse == false) return;
+        }
         this.saveFile(settings.lastOpenedFile);
         settings.lastOpenedFile = null;
         writeJSON("fileSettings", settings);
