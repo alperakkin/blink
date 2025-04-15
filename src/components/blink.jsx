@@ -14,7 +14,8 @@ const Blink = () => {
   const parserRef = useRef(null);
   const [files, setFiles] = useState([]);
   const [parserInstance, setParserInstance] = useState(null);
-  const [activeFile, setActiveFile] = useState(null);
+  const [activeTabID, setActiveTabID] = useState(null);
+  const firstRun = useRef(true);
 
   useEffect(() => {
     if (!editorRef?.current) return;
@@ -28,11 +29,17 @@ const Blink = () => {
     parserRef.current = new Parser(
       codeEditor,
       setFiles,
-      setActiveFile,
+      setActiveTabID,
       recentFolders
     );
-    parserRef.current.gotoFolder(settings.cwd);
-    parserRef.current.openFile(settings.lastOpenedFile);
+
+    if (firstRun.current == true) {
+      parserRef.current.gotoFolder(settings.cwd);
+      let tabs = settings.recentTabs || [];
+      for (const tab of tabs) parserRef.current.openFile(tab);
+      firstRun.current = false;
+    }
+
     setParserInstance(parserRef.current);
 
     return () => {
@@ -47,12 +54,12 @@ const Blink = () => {
         {
           <TabManager
             ref={editorRef}
-            activeFile={activeFile}
+            activeTabID={activeTabID}
             parser={parserInstance}
           />
         }
 
-        {!activeFile && <WelcomeScreen parser={parserInstance} />}
+        {activeTabID == null && <WelcomeScreen parser={parserInstance} />}
       </div>
       <div className="command-line-container">
         <CommandLine

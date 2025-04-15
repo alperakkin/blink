@@ -6,43 +6,67 @@
   }
 
   .tab-viewer {
+    padding-top: 5px;
     height: 40px;
     background-color: rgb(16, 30, 25);
     color: white;
     display: flex;
     justify-content: flex-start;
+    position: relative;
+    align-items: flex-end;
   }
 
   .tab-item {
-    display: flex;
     cursor: pointer;
-    background-color:rgb(4, 70, 22);
+    background-color:rgb(32, 36, 33);
     color: white;
-    width:100px;
+    width:fit-content;
     height: 80%;
     bottom: 0;
     align-items: center;
     justify-content: center;
     transform: scale(0.98);
     clip-path: polygon(
-      12px 0,
+      8px 0,
       100% 0,
       100% 100%,
       0 100%,
-      0 12px
+      0 8px
     );
+    display: flex;
+    padding: 5px;
+
+    bottom:0;
+    left:0;
+    gap: 5px;
+
+
+
+
+  }
+
+  .tab-item.active {
+    background-color:rgb(51, 53, 52);
   }
 
 
-  .tab-item:hover {
-    background-color:rgb(10, 154, 49);
-  }
-
-  .tab-item:active {
-    background-color:rgb(10, 154, 49);
-  }
   .code-editor {
     flex: 1;
     background-color: lightgray;
     height: 100%;
   }
+
+.close-tab-item {
+  margin-left: 10px;
+  width: 16px;
+  height: 16px;
+  filter: sepia(1) saturate(0.5) hue-rotate(100deg);
+
+
+}
+
+.close-tab-item:hover {
+  width: 20px;
+  height: 20px;
+  filter: sepia(1) saturate(2) hue-rotate(100deg);
+}

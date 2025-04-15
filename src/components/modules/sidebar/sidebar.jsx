@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "public/css/sidebar.css";
 import fileIcons from "libs/fileicons";
 import renderFolderExplorer from "./folderbrowser";
+import path from "path-browserify";
 
 const FileManager = ({ files = [], parser }) => {
   const [highlightedFile, setHighlightedFile] = useState(null);
@@ -18,10 +19,11 @@ const FileManager = ({ files = [], parser }) => {
 
   const handleFileAndFolders = (file) => {
     setHighlightedFile(file.name);
+    const filePath = path.join(parser.cwd, file.name);
 
     if (file.isDirectory) parser.handleCommandSubmit(`cd ${file.name}`);
     else {
-      parser.handleCommandSubmit(`open ${file.name}`);
+      parser.handleCommandSubmit(`open ${filePath}`);
     }
   };
 

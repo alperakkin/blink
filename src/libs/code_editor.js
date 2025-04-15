@@ -1,12 +1,13 @@
 import * as monaco from "monaco-editor";
 import path from 'path-browserify';
+import { writeJSON, readJSON } from "./utils";
 
+const MAX_RECENT_TABS = 20;
 class CodeEditor {
     constructor() {
         this.editor;
         this.theme = "vs-dark";
-        this.activeFile = null;
-        this.lastContent = null;
+        this.activeTabID = null;
         this.tabs = [];
         this.fileTypes = {
             ".js": "javascript",
@@ -23,19 +24,36 @@ class CodeEditor {
     }
 
     hasChanged() {
-        let currentContent = this.editor.getModel().getValue();
-        return currentContent !== this.lastContent;
+        let currentContent = this.getTabByID(this.activeTabID).model.getValue();
+        return currentContent !== this.getTabByID(this.activeTabID).lastContent;
     }
 
-    getTabIndex(filePath) {
-        for (let index = 0; index < this.tabs.length; index++) {
-            if (this.tabs[index].filePath == filePath) return index;
+    getTabByID(ID) {
+        for (const tab of this.tabs) {
+            if (tab.ID === ID) return tab;
         }
+
+
+    }
+    addRecentTabs(filePath, recentTabs) {
+        if (filePath && !recentTabs.includes(filePath))
+            recentTabs.unshift(filePath);
+        if (recentTabs.length > MAX_RECENT_TABS)
+            recentTabs.pop();
+        return recentTabs;
     }
 
-    switchTab(ID) {
-        const model = this.tabs[ID].model;
+    removeTabByID(ID) {
+        this.tabs = this.tabs.filter(tab => tab.ID != ID);
+    }
+
+
+    switchTabHandler(ID) {
+        const tab = this.getTabByID(ID);
+        if (!tab) return;
+        const model = tab.model;
         this.editor.setModel(model);
+        this.activeTabID = ID;
 
 
 
@@ -68,6 +86,7 @@ class CodeEditor {
         const ext = path.extname(filePath);
         const model = monaco.editor.createModel(source, this.setLanguage(ext));
         const ID = this.tabs.length;
+
         this.tabs.push({
             ID: ID,
             name: fileName,
@@ -76,17 +95,18 @@ class CodeEditor {
             lastContent: source
         })
         this.editor.setModel(model);
+        return ID;
     }
 
 
     openFileHandler(filePath, source) {
-        this.setModel(filePath, source);
-
-        this.activeFile = filePath;
+        const tabId = this.setModel(filePath, source);
+        this.activeTabID = tabId;
+        return tabId;
     }
 
     deleteFileHandler(cwd, filePath = null) {
-        filePath = filePath == null ? this.activeFile : filePath;
+        filePath = filePath == null ? this.getTabByID(this.activeTabID).filePath : filePath;
         if (!filePath) return;
         const fullPath = path.join(cwd, filePath);
         if (path.extname(fullPath)) {
@@ -98,21 +118,27 @@ class CodeEditor {
         }
     }
 
-    saveFileHandler(cwd, filePath = null) {
-
-        filePath = filePath == null ? this.activeFile : filePath;
+    saveFileHandler(filePath = null) {
+        filePath = filePath == null ? this.getTabByID(this.activeTabID).filePath : filePath;
         if (!filePath) return;
-        const fullPath = path.join(cwd, filePath);
         const source = this.editor.getModel().getValue();
-        window.electron.createFile(fullPath, source);
-        this.lastContent = source;
+        window.electron.createFile(filePath, source);
+        this.getTabByID(this.activeTabID).lastContent = source;
 
     }
 
-    closeFileHandler(filePath) {
-        let index = this.getTabIndex(filePath);
-        this.tabs.splice(index, 1);
-        this.activeFile = this.tabs.length > 0 ? this.tabs[0].filePath : null;
+    closeFileHandler(ID) {
+        let tab = this.getTabByID(ID);
+
+        let settings = readJSON("fileSettings");
+        settings.recentTabs = Array.from(new Set(settings.recentTabs.filter(recent => recent !== tab.filePath)));
+        writeJSON("fileSettings", settings);
+        this.removeTabByID(ID);
+        this.activeTabID = this.tabs.length > 0 ? this.tabs[0].ID : null;
+        if (!this.activeTabID) return;
+        tab = this.getTabByID(this.activeTabID);
+
+        this.editor.setModel(tab.model);
 
     }
 }

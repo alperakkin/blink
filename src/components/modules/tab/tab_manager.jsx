@@ -1,15 +1,22 @@
 import React, { forwardRef } from "react";
 import "public/css/tabmanager.css";
-
-const TabManager = forwardRef(({ activeFile, parser }, ref) => {
+import xMark from "public/icons/xmark.svg";
+const TabManager = forwardRef(({ activeTabID, parser }, ref) => {
   const renderTabs = (tab) => {
     return (
       <div
-        className="tab-item"
+        className={`tab-item ${activeTabID === tab.ID ? "active" : ""}`}
         key={tab.ID}
-        onClick={() => parser?.codeEditor.switchTab(tab.ID)}
+        onClick={() => parser?.switchTab(tab.ID)}
       >
         {tab.name}
+        <img
+          className="close-tab-item"
+          src={xMark}
+          onClick={() => {
+            parser.closeFile();
+          }}
+        />
       </div>
     );
   };
@@ -18,7 +25,7 @@ const TabManager = forwardRef(({ activeFile, parser }, ref) => {
     <div
       className="tab-container"
       style={{
-        display: activeFile ? "block" : "none",
+        display: activeTabID == null ? "none" : "block",
       }}
     >
       <div className="tab-viewer">

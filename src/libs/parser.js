@@ -4,10 +4,10 @@ import path from 'path-browserify';
 const MAX_HISTORY = 100;
 const MAX_RECENT_FOLDERS = 5;
 class Parser {
-    constructor(codeEditor, setFiles, setActiveFile, recentFolders) {
+    constructor(codeEditor, setFiles, setActiveTabID, recentFolders) {
         this.codeEditor = codeEditor;
         this.setFiles = setFiles;
-        this.setActiveFile = setActiveFile;
+        this.setActiveTabID = setActiveTabID;
         this.cwd = "/";
         this.prevCwd = null;
         this.history = [];
@@ -17,7 +17,7 @@ class Parser {
 
         this.keys = {
             'cd': (path) => this.gotoFolder(path),
-            'open': (path) => this.openFile(path),
+            'open': (filePath) => this.openFile(filePath),
             'new': (path) => this.newFileOrFolder(path),
             'rm': (path) => this.deleteFileOrFolder(path),
             'save': (path) => this.saveFile(path),
@@ -106,7 +106,7 @@ class Parser {
         const fullPath = path.join(this.cwd, filePath);
         if (path.extname(fullPath)) {
             window.electron.createFile(fullPath, "");
-            this.openFile(filePath);
+            this.openFile(fullPath);
         }
         else {
             window.electron.makeDir(fullPath);
@@ -126,21 +126,21 @@ class Parser {
     openFile(filePath) {
         if (filePath === undefined || filePath === null) return;
         let settings = readJSON("fileSettings");
-        const fullPath = path.join(this.cwd, filePath);
 
-        const result = window.electron.readFile(fullPath);
+        const result = window.electron.readFile(filePath);
 
         if (result.exists === false) {
-            this.setActiveFile(null);
-            settings.lastOpenedFile = null;
+            this.setActiveTabID(null);
+            settings.recentTabs = [];
             writeJSON("fileSettings", settings);
             return;
         };
 
-        this.codeEditor.openFileHandler(fullPath, result.source);
+        let tabId = this.codeEditor.openFileHandler(filePath, result.source);
+        settings.recentTabs = settings.recentTabs || [];
+        settings.recentTabs = this.codeEditor.addRecentTabs(filePath, settings.recentTabs);
 
-        settings.lastOpenedFile = filePath;
-        this.setActiveFile(filePath);
+        this.setActiveTabID(tabId);
         this.addToRecent();
         settings.recentFolders = this.recentFolders;
         writeJSON("fileSettings", settings);
@@ -148,22 +148,30 @@ class Parser {
     }
 
     saveFile(filePath = null) {
-        this.codeEditor.saveFileHandler(this.cwd, filePath);
+        this.codeEditor.saveFileHandler(filePath);
         this.refresh();
+
+    }
+    switchTab(ID) {
+        this.codeEditor.switchTabHandler(ID);
+        this.setActiveTabID(this.codeEditor.activeTabID);
 
     }
 
     closeFile() {
         let settings = readJSON("fileSettings");
-        if (!settings.lastOpenedFile) return;
+        if (this.codeEditor.activeTabID == null) return;
+        const tab = this.codeEditor.getTabByID(this.codeEditor.activeTabID);
+        const filePath = tab.filePath;
         if (this.codeEditor.hasChanged(filePath)) {
-            let userResponse = confirm(`Save ${settings.lastOpenedFile}?`);
+            let userResponse = confirm(`Save ${filePath}?`);
             if (userResponse == false) return;
         }
-        this.saveFile(settings.lastOpenedFile);
-        this.codeEditor.closeFileHandler(fullPath)
-        this.setActiveFile(this.codeEditor.activeFile);
-        settings.lastOpenedFile = this.codeEditor.activeFile;
+
+        this.saveFile(filePath);
+        this.codeEditor.closeFileHandler(this.codeEditor.activeTabID);
+        this.setActiveTabID(this.codeEditor.activeTabID);
+        settings.recentTabs.push(filePath);
         writeJSON("fileSettings", settings);
     }
 }
