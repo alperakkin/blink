@@ -15,6 +15,7 @@ const Blink = () => {
   const [files, setFiles] = useState([]);
   const [parserInstance, setParserInstance] = useState(null);
   const [activeTabID, setActiveTabID] = useState(null);
+  const [activeSideBar, setActiveSideBar] = useState(true);
   const firstRun = useRef(true);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const Blink = () => {
   return (
     <div className="container">
       <div className="editor">
-        <FileManager files={files} parser={parserInstance} />
+        {activeSideBar && <FileManager files={files} parser={parserInstance} />}
         {
           <TabManager
             ref={editorRef}
@@ -65,6 +66,8 @@ const Blink = () => {
         <CommandLine
           id="cmd"
           parser={parserInstance}
+          setActiveSideBar={setActiveSideBar}
+          activeSideBar={activeSideBar}
           onCommandSubmit={(cmd) => parserRef.current?.handleCommandSubmit(cmd)}
         />
       </div>

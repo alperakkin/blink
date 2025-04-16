@@ -2,7 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import "public/css/commandline.css";
 import logo from "public/image/logo.png";
 
-const CommandLine = ({ onCommandSubmit, parser }) => {
+const CommandLine = ({
+  onCommandSubmit,
+  parser,
+  setActiveSideBar,
+  activeSideBar,
+}) => {
   const [command, setCommand] = useState("");
   const isEventAdded = useRef(false);
 
@@ -12,6 +17,11 @@ const CommandLine = ({ onCommandSubmit, parser }) => {
       onCommandSubmit(command);
       setCommand("");
     }
+  };
+
+  const handleSideBar = () => {
+    console.log(activeSideBar);
+    setActiveSideBar(!activeSideBar);
   };
 
   useEffect(() => {
@@ -33,7 +43,11 @@ const CommandLine = ({ onCommandSubmit, parser }) => {
 
   return (
     <form className="command-form" onSubmit={handleSubmit}>
-      <img className="command-image" src={logo} />
+      <img
+        className="command-image"
+        src={logo}
+        onClick={() => handleSideBar()}
+      />
 
       <input
         type="text"

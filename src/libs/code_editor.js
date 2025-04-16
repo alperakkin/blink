@@ -131,7 +131,7 @@ class CodeEditor {
 
     closeFileHandler(ID) {
         let tab = this.getTabByID(ID);
-
+        tab.model.dispose();
         let settings = readJSON("fileSettings");
         this.removeTabByID(ID);
         settings.recentTabs = settings.recentTabs.filter(filePath => filePath != tab.filePath);
