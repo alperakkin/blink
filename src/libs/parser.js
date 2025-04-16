@@ -159,7 +159,7 @@ class Parser {
     }
 
     closeFile() {
-        let settings = readJSON("fileSettings");
+
         if (this.codeEditor.activeTabID == null) return;
         const tab = this.codeEditor.getTabByID(this.codeEditor.activeTabID);
         const filePath = tab.filePath;
@@ -171,8 +171,8 @@ class Parser {
         this.saveFile(filePath);
         this.codeEditor.closeFileHandler(this.codeEditor.activeTabID);
         this.setActiveTabID(this.codeEditor.activeTabID);
-        settings.recentTabs.push(filePath);
-        writeJSON("fileSettings", settings);
+
+
     }
 }
 

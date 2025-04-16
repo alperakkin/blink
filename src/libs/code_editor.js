@@ -127,17 +127,18 @@ class CodeEditor {
 
     }
 
+    removeRecent
+
     closeFileHandler(ID) {
         let tab = this.getTabByID(ID);
 
         let settings = readJSON("fileSettings");
-        settings.recentTabs = Array.from(new Set(settings.recentTabs.filter(recent => recent !== tab.filePath)));
-        writeJSON("fileSettings", settings);
         this.removeTabByID(ID);
+        settings.recentTabs = settings.recentTabs.filter(filePath => filePath != tab.filePath);
+        writeJSON("fileSettings", settings);
         this.activeTabID = this.tabs.length > 0 ? this.tabs[0].ID : null;
         if (!this.activeTabID) return;
         tab = this.getTabByID(this.activeTabID);
-
         this.editor.setModel(tab.model);
 
     }
