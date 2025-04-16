@@ -1,0 +1,6 @@
+{
+  "ctrl+s": {
+    "description": "Save file",
+    "command": "save"
+  }
+}

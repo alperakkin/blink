@@ -119,6 +119,9 @@ class CodeEditor {
     }
 
     saveFileHandler(filePath = null) {
+        const tab = this.getTabByID(this.activeTabID);
+        console.log(tab, filePath);
+        if (!filePath && !tab) return;
         filePath = filePath == null ? this.getTabByID(this.activeTabID).filePath : filePath;
         if (!filePath) return;
         const source = this.editor.getModel().getValue();

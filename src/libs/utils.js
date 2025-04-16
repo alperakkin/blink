@@ -11,8 +11,9 @@ export const loadFiles = async (dir, setFiles) => {
 export const readJSON = (filePath) => {
     filePath = `settings/${filePath}.json`;
     const fullPath = path.join(window.electron.basePath(), filePath);
+
     if (!window.electron.fileExists(fullPath))
-        return { cwd: window.electron.homeFolder() };
+        return {};
     let result = window.electron.readFile(fullPath);
     if (!result.exists) return;
     return JSON.parse(result.source);

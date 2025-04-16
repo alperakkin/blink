@@ -5,9 +5,10 @@ import StatusBar from "./modules/statusbar";
 import "public/css/blink.css";
 import Parser from "libs/parser";
 import CodeEditor from "libs/code_editor";
-import { readJSON } from "../libs/utils";
+import { readJSON } from "libs/utils";
 import WelcomeScreen from "./modules/welcome";
 import TabManager from "./modules/tab/tab_manager";
+import ShortCutHandler from "libs/shortcut_handler";
 
 const Blink = () => {
   const editorRef = useRef(null);
@@ -43,7 +44,17 @@ const Blink = () => {
 
     setParserInstance(parserRef.current);
 
+    const shortcut = new ShortCutHandler(
+      readJSON("shortcuts"),
+      parserRef.current
+    );
+    const handleKeyDown = (e) => {
+      shortcut.mapKey(e);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
     return () => {
+      window.removeEventListener("keydown", handleKeyDown);
       codeEditor?.dispose?.();
     };
   }, []);
