@@ -13,6 +13,8 @@ import ShortCutHandler from "libs/shortcut_handler";
 const Blink = () => {
   const editorRef = useRef(null);
   const parserRef = useRef(null);
+  const commandFocusRef = useRef(null);
+
   const [files, setFiles] = useState([]);
   const [parserInstance, setParserInstance] = useState(null);
   const [activeTabID, setActiveTabID] = useState(null);
@@ -32,7 +34,8 @@ const Blink = () => {
       codeEditor,
       setFiles,
       setActiveTabID,
-      recentFolders
+      recentFolders,
+      commandFocusRef
     );
 
     if (firstRun.current == true) {
@@ -79,6 +82,7 @@ const Blink = () => {
           parser={parserInstance}
           setActiveSideBar={setActiveSideBar}
           activeSideBar={activeSideBar}
+          ref={commandFocusRef}
           onCommandSubmit={(cmd) => parserRef.current?.handleCommandSubmit(cmd)}
         />
       </div>

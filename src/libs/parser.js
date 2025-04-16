@@ -4,10 +4,12 @@ import path from 'path-browserify';
 const MAX_HISTORY = 100;
 const MAX_RECENT_FOLDERS = 5;
 class Parser {
-    constructor(codeEditor, setFiles, setActiveTabID, recentFolders) {
+    constructor(codeEditor, setFiles, setActiveTabID, recentFolders,
+        commandFocusRef) {
         this.codeEditor = codeEditor;
         this.setFiles = setFiles;
         this.setActiveTabID = setActiveTabID;
+        this.commandFocusRef = commandFocusRef;
         this.cwd = "/";
         this.prevCwd = null;
         this.history = [];
@@ -22,6 +24,8 @@ class Parser {
             'rm': (path) => this.deleteFileOrFolder(path),
             'save': (path) => this.saveFile(path),
             'close': () => this.closeFile(),
+            'focusCommand': () => this.focusCommand(),
+            'focusEditor': () => this.focusEditor()
         }
 
 
@@ -171,8 +175,12 @@ class Parser {
         this.saveFile(filePath);
         this.codeEditor.closeFileHandler(this.codeEditor.activeTabID);
         this.setActiveTabID(this.codeEditor.activeTabID);
-
-
+    }
+    focusCommand() {
+        this.commandFocusRef.current.focus();
+    }
+    focusEditor() {
+        this.codeEditor.editor.focus();
     }
 }
 

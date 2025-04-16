@@ -2,5 +2,13 @@
   "ctrl+s": {
     "description": "Save file",
     "command": "save"
+  },
+  "ctrl+b": {
+    "description": "Switch to command tab",
+    "command": "focusCommand"
+  },
+  "ctrl+e": {
+    "description": "Switch to editor tab",
+    "command": "focusEditor"
   }
 }
