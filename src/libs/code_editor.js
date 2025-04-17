@@ -32,8 +32,12 @@ class CodeEditor {
         for (const tab of this.tabs) {
             if (tab.ID === ID) return tab;
         }
+    }
 
-
+    getTabIndex(ID) {
+        for (let i = 0; i < this.tabs.length; i++) {
+            if (this.tabs[i].ID === ID) return i;
+        }
     }
     addRecentTabs(filePath, recentTabs) {
         if (filePath && !recentTabs.includes(filePath))

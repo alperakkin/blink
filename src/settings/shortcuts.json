@@ -10,5 +10,13 @@
   "ctrl+e": {
     "description": "Switch to editor tab",
     "command": "focusEditor"
+  },
+  "shift+x": {
+    "description": "Close active tab",
+    "command": "close"
+  },
+  "alt+tab": {
+    "description": "Switch Tabs",
+    "command": "nextTab"
   }
 }

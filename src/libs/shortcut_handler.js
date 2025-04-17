@@ -7,7 +7,7 @@ class ShortCutHandler {
 
 
     eventKeyToString(e) {
-        console.log(e);
+
         let keys = [];
         if (e.ctrlKey) keys.push("ctrl");
         if (e.metaKey) keys.push("meta");

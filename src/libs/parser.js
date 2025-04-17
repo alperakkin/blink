@@ -25,7 +25,8 @@ class Parser {
             'save': (path) => this.saveFile(path),
             'close': () => this.closeFile(),
             'focusCommand': () => this.focusCommand(),
-            'focusEditor': () => this.focusEditor()
+            'focusEditor': () => this.focusEditor(),
+            'nextTab': () => this.nextTab()
         }
 
 
@@ -160,6 +161,14 @@ class Parser {
         this.codeEditor.switchTabHandler(ID);
         this.setActiveTabID(this.codeEditor.activeTabID);
 
+    }
+
+    nextTab() {
+        let nextTabIndex = this.codeEditor.getTabIndex(this.codeEditor.activeTabID) + 1;
+        nextTabIndex = nextTabIndex % this.codeEditor.tabs.length;
+        let nextTabElement = this.codeEditor.tabs[nextTabIndex];
+        if (!nextTabElement) return;
+        this.switchTab(nextTabElement.ID);
     }
 
     closeFile() {
