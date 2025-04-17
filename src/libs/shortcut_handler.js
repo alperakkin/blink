@@ -1,8 +1,12 @@
+import * as monaco from "monaco-editor";
 
+const EDITOR_SCRIPT = "blink.editor."
 class ShortCutHandler {
     constructor(keyMapping, parser) {
         this.keyMapping = keyMapping;
         this.parser = parser;
+
+        this.bindToEditor();
     }
 
 
@@ -28,12 +32,54 @@ class ShortCutHandler {
         const hotKeyItem = this.keyMapping[hotkey];
         if (hotKeyItem) {
             event.preventDefault();
-            this.parser.parseCmd(hotKeyItem.command);
+            if (!hotKeyItem.description.startsWith(EDITOR_SCRIPT))
+                this.parser.parseCmd(hotKeyItem.command);
         }
 
-
-
     }
+
+    bindToEditor() {
+        const editor = this.parser.codeEditor.editor;
+
+        Object.entries(this.keyMapping).forEach(([keyStr, { description, command }]) => {
+            const keyCode = ShortCutHandler.parseKeybinding(keyStr);
+
+            editor.addCommand(keyCode, () => {
+                if (
+                    typeof this.parser[command] === 'function' && description.startsWith(EDITOR_SCRIPT)) {
+                    this.parser[command](description.split('blink.')[1]);
+                }
+            });
+        });
+    }
+
+    static parseKeybinding(keyStr) {
+        const parts = keyStr.toLowerCase().split('+');
+        let key = 0;
+
+        parts.forEach(part => {
+            switch (part.trim()) {
+                case 'ctrl':
+                case 'cmd':
+                case 'meta':
+                    key |= monaco.KeyMod.CtrlCmd;
+                    break;
+                case 'shift':
+                    key |= monaco.KeyMod.Shift;
+                    break;
+                case 'alt':
+                    key |= monaco.KeyMod.Alt;
+                    break;
+                default:
+                    const code = 'Key' + part.toUpperCase();
+                    key |= monaco.KeyCode[code] || monaco.KeyCode[part.toUpperCase()];
+            }
+        });
+
+        return key;
+    }
+
+
 
 }
 

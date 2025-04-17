@@ -26,7 +26,8 @@ class Parser {
             'close': () => this.closeFile(),
             'focusCommand': () => this.focusCommand(),
             'focusEditor': () => this.focusEditor(),
-            'nextTab': () => this.nextTab()
+            'nextTab': () => this.nextTab(),
+            'runEditorAction': (action) => this.runEditorAction(action)
         }
 
 
@@ -190,6 +191,13 @@ class Parser {
     }
     focusEditor() {
         this.codeEditor.editor.focus();
+    }
+    runEditorAction(actionId) {
+        const action = this.codeEditor.editor.getAction(actionId);
+
+        if (action && action.isSupported()) {
+            action.run();
+        }
     }
 }
 
