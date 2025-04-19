@@ -5,11 +5,12 @@ const MAX_HISTORY = 100;
 const MAX_RECENT_FOLDERS = 5;
 class Parser {
     constructor(codeEditor, setFiles, setActiveTabID, recentFolders,
-        commandFocusRef) {
+        commandFocusRef, setActiveSettings) {
         this.codeEditor = codeEditor;
         this.setFiles = setFiles;
         this.setActiveTabID = setActiveTabID;
         this.commandFocusRef = commandFocusRef;
+        this.setActiveSettings = setActiveSettings;
         this.cwd = "/";
         this.prevCwd = null;
         this.history = [];
@@ -27,7 +28,8 @@ class Parser {
             'focusCommand': () => this.focusCommand(),
             'focusEditor': () => this.focusEditor(),
             'nextTab': () => this.nextTab(),
-            'runEditorAction': (action) => this.runEditorAction(action)
+            'runEditorAction': (action) => this.runEditorAction(action),
+            'settings': () => this.displaySettings()
         }
 
 
@@ -198,6 +200,19 @@ class Parser {
         if (action && action.isSupported()) {
             action.run();
         }
+    }
+
+    displaySettings() {
+        this.setActiveSettings(true);
+        this.setActiveTabID(null);
+    }
+
+    closeSettings() {
+        this.setActiveSettings(false);
+        if (this.codeEditor.tabs.length > 0)
+            this.setActiveTabID(true);
+
+
     }
 }
 

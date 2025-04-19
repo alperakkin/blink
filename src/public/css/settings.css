@@ -1,0 +1,12 @@
+.settings-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.close-button  {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 98%;
+    top: 2%;
+}

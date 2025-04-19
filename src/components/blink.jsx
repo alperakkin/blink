@@ -9,6 +9,7 @@ import { readJSON } from "libs/utils";
 import WelcomeScreen from "./modules/welcome";
 import TabManager from "./modules/tab/tab_manager";
 import ShortCutHandler from "libs/shortcut_handler";
+import SettingsScreen from "./modules/settings";
 
 const Blink = () => {
   const editorRef = useRef(null);
@@ -18,6 +19,7 @@ const Blink = () => {
   const [files, setFiles] = useState([]);
   const [parserInstance, setParserInstance] = useState(null);
   const [activeTabID, setActiveTabID] = useState(null);
+  const [activeSettings, setActiveSettings] = useState(false);
   const [activeSideBar, setActiveSideBar] = useState(true);
   const firstRun = useRef(true);
 
@@ -35,7 +37,8 @@ const Blink = () => {
       setFiles,
       setActiveTabID,
       recentFolders,
-      commandFocusRef
+      commandFocusRef,
+      setActiveSettings
     );
 
     if (firstRun.current == true) {
@@ -65,7 +68,9 @@ const Blink = () => {
   return (
     <div className="container">
       <div className="editor">
-        {activeSideBar && <FileManager files={files} parser={parserInstance} />}
+        {!activeSettings && activeSideBar && (
+          <FileManager files={files} parser={parserInstance} />
+        )}
         {
           <TabManager
             ref={editorRef}
@@ -73,8 +78,10 @@ const Blink = () => {
             parser={parserInstance}
           />
         }
-
-        {activeTabID == null && <WelcomeScreen parser={parserInstance} />}
+        {activeSettings && <SettingsScreen parser={parserInstance} />}
+        {activeTabID == null && !activeSettings && (
+          <WelcomeScreen parser={parserInstance} />
+        )}
       </div>
       <div className="command-line-container">
         <CommandLine
