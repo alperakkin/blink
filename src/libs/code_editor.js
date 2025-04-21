@@ -164,6 +164,20 @@ class CodeEditor {
         document.body.classList.add(theme === "vs" ? "theme-light" : "theme-dark");
         writeJSON("editorSettings", editorSettings);
     }
+    readFontStyle() {
+        const editorSettings = readJSON("editorSettings");
+        return editorSettings.selectedFont || "monaco";
+    }
+
+    setFontStyle(fontStyle) {
+        let editorSettings = readJSON("editorSettings");
+        editorSettings.selectedFont = fontStyle;
+        this.editor.updateOptions({
+            fontFamily: fontStyle,
+        });
+
+        writeJSON("editorSettings", editorSettings);
+    }
 }
 
 export default CodeEditor;
