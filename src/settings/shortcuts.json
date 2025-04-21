@@ -3,11 +3,11 @@
     "description": "blink.save.file",
     "command": "save"
   },
-  "ctrl+b": {
+  "ctrl+shift+b": {
     "description": "blink.switch.to.command",
     "command": "focusCommand"
   },
-  "ctrl+p": {
+  "ctrl+shift+s": {
     "description": "blink.settings",
     "command": "settings"
   },

@@ -37,3 +37,7 @@
     width:100%
 
 }
+
+.theme-selection {
+    background-color: var(--background-color);
+}
