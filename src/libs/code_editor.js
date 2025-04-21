@@ -4,9 +4,8 @@ import { writeJSON, readJSON } from "./utils";
 
 const MAX_RECENT_TABS = 20;
 class CodeEditor {
-    constructor() {
+    constructor(editorSettings) {
         this.editor;
-        this.theme = "vs-dark";
         this.activeTabID = null;
         this.tabs = [];
         this.fileTypes = {
@@ -21,6 +20,8 @@ class CodeEditor {
             ".cs": "csharp",
             ".xml": "xml"
         }
+        this.settings = editorSettings;
+        this.theme = this.settings.theme || "vs-dark";
     }
 
     hasChanged() {
@@ -148,6 +149,20 @@ class CodeEditor {
         tab = this.getTabByID(this.activeTabID);
         this.editor.setModel(tab.model);
 
+    }
+
+    readTheme() {
+        const editorSettings = readJSON("editorSettings");
+        return editorSettings.theme || "vs-dark";
+    }
+
+    setTheme(theme) {
+        let editorSettings = readJSON("editorSettings");
+        editorSettings.theme = theme;
+        monaco.editor.setTheme(theme);
+        document.body.classList.remove("theme-dark", "theme-light");
+        document.body.classList.add(theme === "vs" ? "theme-light" : "theme-dark");
+        writeJSON("editorSettings", editorSettings);
     }
 }
 

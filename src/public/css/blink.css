@@ -50,6 +50,7 @@
 }
 
 .editor {
+  background-color: var(--background-color);
     display: flex;
     flex:1;
 

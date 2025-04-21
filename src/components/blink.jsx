@@ -27,11 +27,12 @@ const Blink = () => {
   useEffect(() => {
     if (!editorRef?.current) return;
 
-    const codeEditor = new CodeEditor();
+    const editorSettings = readJSON("editorSettings");
+    const fileSettings = readJSON("fileSettings");
+    const codeEditor = new CodeEditor(editorSettings);
     codeEditor.createNew(editorRef.current);
 
-    const settings = readJSON("fileSettings");
-    let recentFolders = settings.recentFolders || [];
+    let recentFolders = fileSettings.recentFolders || [];
 
     parserRef.current = new Parser(
       codeEditor,
@@ -43,9 +44,10 @@ const Blink = () => {
     );
 
     if (firstRun.current == true) {
-      parserRef.current.gotoFolder(settings.cwd);
-      let tabs = settings.recentTabs || [];
+      parserRef.current.gotoFolder(fileSettings.cwd);
+      let tabs = fileSettings.recentTabs || [];
       for (const tab of tabs) parserRef.current.openFile(tab);
+      parserRef.current.codeEditor.setTheme(editorSettings.theme);
       firstRun.current = false;
     }
 
