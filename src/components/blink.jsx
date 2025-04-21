@@ -21,6 +21,7 @@ const Blink = () => {
   const [activeTabID, setActiveTabID] = useState(null);
   const [activeSettings, setActiveSettings] = useState(false);
   const [activeSideBar, setActiveSideBar] = useState(true);
+
   const firstRun = useRef(true);
 
   useEffect(() => {

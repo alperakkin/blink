@@ -1,6 +1,8 @@
 .settings-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    width: 98%;
+    align-items: center;
 }
 
 .close-button  {
@@ -9,4 +11,27 @@
     height: 20px;
     left: 98%;
     top: 2%;
+}
+
+.themes{
+    width: 75%;
+    color: var(--text-color);
+    cursor: pointer;
+    user-select: none;
+
+
+}
+
+.title {
+    display: flex;
+    margin-top: 15px;
+    background-color: var(--settings-title-color);
+
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #5fe17f;
+    border-radius: 5px;
+    width:100%
+
 }

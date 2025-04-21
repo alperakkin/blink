@@ -9,8 +9,38 @@
     width: 100%;
     overflow-x: hidden;
     overflow-y: hidden;
-    background-color: #1e1e1e;
   }
+
+  body.theme-dark {
+    --background-color: #1e1e1e;
+    --command-form-background: #333;
+    --command-input-background: #333;
+    --input-focus-background:#363535;
+    --text-color: #ffffff;
+    --settings-title-color: #040b05;
+    --explorer-file-item-color: #d5dad6;
+    --browser-background: #333;
+    --browser-element-color: grayscale(1) brightness(0.6) contrast(1.7);
+    --tab-item-active: rgb(51, 53, 52);
+    --tab-item-color: #333;
+  }
+
+
+  body.theme-light {
+    --background-color: #ffffff;
+    --command-form-background: #0e310b;
+    --command-input-background: #d2c9c9;
+    --input-focus-background:#cac3c3;
+    --text-color: #000000;
+    --settings-title-color: #d2e2d1;
+    --explorer-file-item-color: rgb(24, 33, 27);
+    --browser-background: #d5dad6;
+    --browser-element-color: grayscale(1) brightness(0.4) contrast(1.7);
+    --tab-item-active: rgb(181, 189, 185);
+    --tab-item-color: #dceadb;
+
+  }
+
 .container {
     display: flex;
     flex-direction: column;

@@ -8,8 +8,8 @@
   .tab-viewer {
     padding-top: 5px;
     height: 40px;
-    background-color: rgb(16, 30, 25);
-    color: white;
+    background-color: var(--background-color);
+    color: var(--text-color);
     display: flex;
     justify-content: flex-start;
     position: relative;
@@ -18,8 +18,8 @@
 
   .tab-item {
     cursor: pointer;
-    background-color:rgb(32, 36, 33);
-    color: white;
+    background-color: var(--tab-item-color);
+    color: var(--text-color);
     width:fit-content;
     height: 80%;
     bottom: 0;
@@ -46,7 +46,7 @@
   }
 
   .tab-item.active {
-    background-color:rgb(51, 53, 52);
+    background-color:var(--tab-item-active);
   }
 
 
