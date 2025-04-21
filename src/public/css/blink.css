@@ -14,8 +14,8 @@
   body.theme-dark {
     --background-color: #1e1e1e;
     --command-form-background: #333;
-    --command-input-background: #333;
-    --input-focus-background:#363535;
+    --command-input-background: #423f3f;
+    --input-focus-background:#423f3f;
     --text-color: #ffffff;
     --settings-title-color: #040b05;
     --explorer-file-item-color: #d5dad6;

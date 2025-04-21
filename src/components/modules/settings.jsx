@@ -41,7 +41,12 @@ const SettingsScreen = ({ parser }) => {
           style={{ display: displayTheme === 1 ? "block" : "none" }}
         >
           <div className="theme-selection">
-            <select value={theme} onChange={(e) => setTheme(e.target.value)}>
+            <div className="theme-label">Theme:</div>
+            <select
+              value={theme}
+              onChange={(e) => setTheme(e.target.value)}
+              className="theme-select"
+            >
               <option value="vs-dark">Dark Mode</option>
               <option value="vs">Light Mode</option>
             </select>
