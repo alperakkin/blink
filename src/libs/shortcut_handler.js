@@ -32,8 +32,17 @@ class ShortCutHandler {
         const hotKeyItem = this.keyMapping[hotkey];
         if (hotKeyItem) {
             event.preventDefault();
-            if (!hotKeyItem.description.startsWith(EDITOR_SCRIPT))
-                this.parser.parseCmd(hotKeyItem.command);
+            if (!hotKeyItem.description.startsWith(EDITOR_SCRIPT)) {
+                let command = hotKeyItem.command;
+                let args = [];
+                if (hotKeyItem.description.includes(".args.")) {
+                    args = hotKeyItem.description.split(".args.")[1];
+                    command = command + " " + args.replace(".", " ");
+                }
+
+                this.parser.parseCmd(command);
+            }
+
         }
 
     }

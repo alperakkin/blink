@@ -23,6 +23,14 @@
     "description": "blink.switch.to.next.tab",
     "command": "nextTab"
   },
+  "ctrl+`": {
+    "description": "blink.zoom.args.out",
+    "command": "zoom"
+  },
+  "ctrl+shift+`": {
+    "description": "blink.zoom.args.in",
+    "command": "zoom"
+  },
   "ctrl+d": {
     "description": "blink.editor.action.addSelectionToNextFindMatch",
     "command": "runEditorAction"

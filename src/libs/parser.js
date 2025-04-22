@@ -29,7 +29,8 @@ class Parser {
             'focusEditor': () => this.focusEditor(),
             'nextTab': () => this.nextTab(),
             'runEditorAction': (action) => this.runEditorAction(action),
-            'settings': () => this.displaySettings()
+            'settings': () => this.displaySettings(),
+            'zoom': (arg) => this.zoom(arg)
         }
 
 
@@ -213,6 +214,14 @@ class Parser {
             this.setActiveTabID(true);
 
 
+    }
+    zoom(arg) {
+        const mapping = {
+            "in": 1,
+            "out": -1
+        }
+        console.log(this.codeEditor.settings);
+        this.codeEditor.setFontStyle(null, this.codeEditor.settings.fontSize + mapping[arg]);
     }
 }
 

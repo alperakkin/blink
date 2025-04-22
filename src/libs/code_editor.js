@@ -163,6 +163,7 @@ class CodeEditor {
         document.body.classList.remove("theme-dark", "theme-light");
         document.body.classList.add(theme === "vs" ? "theme-light" : "theme-dark");
         writeJSON("editorSettings", editorSettings);
+        this.settings = editorSettings;
     }
     readFontStyle() {
         const editorSettings = readJSON("editorSettings");
@@ -174,14 +175,15 @@ class CodeEditor {
 
     setFontStyle(fontStyle, fontSize) {
         let editorSettings = readJSON("editorSettings");
-        editorSettings.selectedFont = fontStyle;
-        editorSettings.fontSize = fontSize;
+        editorSettings.selectedFont = fontStyle || editorSettings.selectedFont;
+        editorSettings.fontSize = parseInt(fontSize) || editorSettings.fontSize;
         this.editor.updateOptions({
             fontFamily: fontStyle,
             fontSize: fontSize
         });
 
         writeJSON("editorSettings", editorSettings);
+        this.settings = editorSettings;
     }
 }
 
