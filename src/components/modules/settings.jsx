@@ -12,13 +12,19 @@ const SettingsScreen = ({ parser }) => {
     parser.codeEditor.settings.selectedFont || "monaco"
   );
 
+  const [fontSize, setFontSize] = useState(
+    parser.codeEditor.settings.fontSize || 12
+  );
+
   const toggleSection = (section) => {
     setDisplaySection((prev) => (prev === section ? null : section));
   };
 
   const renderFontList = () => {
     return parser.codeEditor.settings.fontList.map((item) => (
-      <option value={item}>{item}</option>
+      <option key={item} value={item}>
+        {item}
+      </option>
     ));
   };
 
@@ -26,13 +32,14 @@ const SettingsScreen = ({ parser }) => {
     const currentTheme = parser.codeEditor.readTheme();
     setTheme(currentTheme);
     const currentFontStyle = parser.codeEditor.readFontStyle();
-    setFontStyle(currentFontStyle);
+    setFontStyle(currentFontStyle.selectedFont);
+    setFontSize(currentFontStyle.fontSize);
   }, []);
 
   useEffect(() => {
     parser.codeEditor.setTheme(theme);
-    parser.codeEditor.setFontStyle(fontStyle);
-  }, [theme, fontStyle]);
+    parser.codeEditor.setFontStyle(fontStyle, fontSize);
+  }, [theme, fontStyle, fontSize]);
 
   return (
     <div className="settings-container">
@@ -89,7 +96,7 @@ const SettingsScreen = ({ parser }) => {
           style={{ display: displaySection === "fonts" ? "block" : "none" }}
         >
           <div className="setting-item">
-            <div className="setting-item-label">Fonts</div>
+            <div className="setting-item-label">Font Style</div>
             <select
               value={fontStyle}
               onChange={(e) => setFontStyle(e.target.value)}
@@ -97,6 +104,16 @@ const SettingsScreen = ({ parser }) => {
             >
               {renderFontList()}
             </select>
+          </div>
+          <div className="setting-item-separator"></div>
+          <div className="setting-item">
+            <div className="setting-item-label">Font Size</div>
+            <input
+              value={fontSize}
+              onChange={(e) => setFontSize(e.target.value)}
+              className="setting-item-select"
+              type="number"
+            />
           </div>
           <div className="setting-item-separator"></div>
         </div>

@@ -166,14 +166,19 @@ class CodeEditor {
     }
     readFontStyle() {
         const editorSettings = readJSON("editorSettings");
-        return editorSettings.selectedFont || "monaco";
+        return {
+            selectedFont: editorSettings.selectedFont || "monaco",
+            fontSize: editorSettings.fontSize || 12
+        }
     }
 
-    setFontStyle(fontStyle) {
+    setFontStyle(fontStyle, fontSize) {
         let editorSettings = readJSON("editorSettings");
         editorSettings.selectedFont = fontStyle;
+        editorSettings.fontSize = fontSize;
         this.editor.updateOptions({
             fontFamily: fontStyle,
+            fontSize: fontSize
         });
 
         writeJSON("editorSettings", editorSettings);
