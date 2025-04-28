@@ -1,4 +1,5 @@
 import * as monaco from "monaco-editor";
+import { readJSON } from "libs/utils";
 
 const EDITOR_SCRIPT = "blink.editor."
 class ShortCutHandler {
@@ -27,7 +28,10 @@ class ShortCutHandler {
         return keys.join("+");
     }
 
+
+
     mapKey(event) {
+        this.keyMapping = readJSON("shortcuts");
         const hotkey = this.eventKeyToString(event);
         const hotKeyItem = this.keyMapping[hotkey];
         if (hotKeyItem) {

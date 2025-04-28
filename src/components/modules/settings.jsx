@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import closeButton from "public/icons/xmark.svg";
 import collapse from "public/icons/collapse.svg";
 import "public/css/settings.css";
+import { readJSON, writeJSON } from "libs/utils";
 
 const SettingsScreen = ({ parser }) => {
   const [displaySection, setDisplaySection] = useState(null);
@@ -15,6 +16,53 @@ const SettingsScreen = ({ parser }) => {
   const [fontSize, setFontSize] = useState(
     parser.codeEditor.settings.fontSize || 12
   );
+  const [shortcuts, setShortcuts] = useState(readJSON("shortcuts"));
+  const timeoutRef = useRef(null);
+
+  const eventKeyToString = (e) => {
+    let keys = [];
+    if (e.ctrlKey) keys.push("ctrl");
+    if (e.metaKey) keys.push("meta");
+    if (e.altKey) keys.push("alt");
+    if (e.shiftKey) keys.push("shift");
+
+    const key = e.key.toLowerCase();
+    if (!["control", "shift", "alt", "meta"].includes(key)) {
+      keys.push(key);
+    }
+
+    return keys.join("+");
+  };
+  const handleFocus = (key) => {
+    window.addEventListener("keydown", handleKeyDown);
+  };
+
+  const handleBlur = () => {
+    window.removeEventListener("keydown", handleKeyDown);
+  };
+
+  const handleKeyDown = (e) => {
+    e.preventDefault();
+
+    const newKey = eventKeyToString(e);
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      const prevKey = e.target.value;
+      const updated = { ...shortcuts };
+      const description = updated[prevKey].description;
+      const command = updated[prevKey].command;
+      delete updated[prevKey];
+
+      updated[newKey] = { description, command };
+
+      writeJSON("shortcuts", updated);
+      setShortcuts(readJSON("shortcuts"));
+    }, 1000);
+  };
 
   const toggleSection = (section) => {
     setDisplaySection((prev) => (prev === section ? null : section));
@@ -25,6 +73,21 @@ const SettingsScreen = ({ parser }) => {
       <option key={item} value={item}>
         {item}
       </option>
+    ));
+  };
+
+  const renderShortcuts = () => {
+    return Object.keys(shortcuts).map((key) => (
+      <div key={key} className="setting-item">
+        <div className="setting-item-label">{shortcuts[key].description}</div>
+        <input
+          className="shortcut-input"
+          value={key || ""}
+          onFocus={() => handleFocus(key)}
+          onBlur={handleBlur}
+          onChange={() => {}}
+        />
+      </div>
     ));
   };
 
@@ -115,6 +178,26 @@ const SettingsScreen = ({ parser }) => {
               type="number"
             />
           </div>
+          <div className="setting-item-separator"></div>
+        </div>
+      </div>
+      <div className="setting-group">
+        <div className="title" onClick={() => toggleSection("shortcuts")}>
+          <div className="setting-title">Shortcuts</div>
+
+          <img
+            src={collapse}
+            className={`collapse-icon ${
+              displaySection === "shortcuts" ? "rotated" : ""
+            }`}
+          />
+        </div>
+
+        <div
+          className="shortcut collapse"
+          style={{ display: displaySection === "shortcuts" ? "block" : "none" }}
+        >
+          {renderShortcuts()}
           <div className="setting-item-separator"></div>
         </div>
       </div>
