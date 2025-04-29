@@ -4,13 +4,14 @@ import path from 'path-browserify';
 const MAX_HISTORY = 100;
 const MAX_RECENT_FOLDERS = 5;
 class Parser {
-    constructor(codeEditor, setFiles, setActiveTabID, recentFolders,
-        commandFocusRef, setActiveSettings) {
+    constructor(codeEditor, setFiles, setActiveTabID, setActiveView, recentFolders,
+        commandFocusRef, viewMap) {
         this.codeEditor = codeEditor;
         this.setFiles = setFiles;
         this.setActiveTabID = setActiveTabID;
+        this.setActiveView = setActiveView;
         this.commandFocusRef = commandFocusRef;
-        this.setActiveSettings = setActiveSettings;
+        this.viewMap = viewMap;
         this.cwd = "/";
         this.prevCwd = null;
         this.history = [];
@@ -30,7 +31,8 @@ class Parser {
             'nextTab': () => this.nextTab(),
             'runEditorAction': (action) => this.runEditorAction(action),
             'settings': () => this.displaySettings(),
-            'zoom': (arg) => this.zoom(arg)
+            'zoom': (arg) => this.zoom(arg),
+            "help": () => this.help()
         }
 
 
@@ -150,6 +152,7 @@ class Parser {
         settings.recentTabs = this.codeEditor.addRecentTabs(filePath, settings.recentTabs);
 
         this.setActiveTabID(tabId);
+        this.setActiveView(this.viewMap.EDITOR_VIEW);
         this.addToRecent();
         settings.recentFolders = this.recentFolders;
         writeJSON("fileSettings", settings);
@@ -204,15 +207,17 @@ class Parser {
     }
 
     displaySettings() {
-        this.setActiveSettings(true);
+        this.setActiveView(this.viewMap.SETTINGS_VIEW);
         this.setActiveTabID(null);
     }
 
     closeSettings() {
-        this.setActiveSettings(false);
-        if (this.codeEditor.tabs.length > 0)
+        if (this.codeEditor.tabs.length > 0) {
             this.setActiveTabID(true);
-
+            this.setActiveView(this.viewMap.EDITOR_VIEW);
+            return;
+        }
+        this.setActiveView(this.viewMap.WELCOME_VIEW);
 
     }
     zoom(arg) {
@@ -220,8 +225,20 @@ class Parser {
             "in": 1,
             "out": -1
         }
-        console.log(this.codeEditor.settings);
+
         this.codeEditor.setFontStyle(null, this.codeEditor.settings.fontSize + mapping[arg]);
+    }
+    help() {
+        this.setActiveTabID(null);
+        this.setActiveView(this.viewMap.HELP_VIEW);
+    }
+    closeHelp() {
+        if (this.codeEditor.tabs.length > 0) {
+            this.setActiveTabID(true);
+            this.setActiveView(this.viewMap.EDITOR_VIEW);
+            return;
+        }
+        this.setActiveView(this.viewMap.WELCOME_VIEW);
     }
 }
 

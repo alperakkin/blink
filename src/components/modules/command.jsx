@@ -19,7 +19,6 @@ const CommandLine = forwardRef(
     };
 
     const handleSideBar = () => {
-      console.log(activeSideBar);
       setActiveSideBar(!activeSideBar);
     };
 
