@@ -43,8 +43,6 @@ class Parser {
     }
 
     parseCmd(cmd) {
-
-
         const spaceIndex = cmd.indexOf(" ");
         let cmdName, args;
 
@@ -209,6 +207,7 @@ class Parser {
 
         if (this.codeEditor.activeTabID == null) return;
         const tab = this.codeEditor.getTabByID(this.codeEditor.activeTabID);
+        console.log(tab);
         const filePath = tab.filePath;
         if (this.codeEditor.hasChanged(filePath)) {
             let userResponse = confirm(`Save ${filePath}?`);

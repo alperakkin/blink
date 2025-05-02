@@ -137,16 +137,24 @@ class CodeEditor {
 
 
     closeFileHandler(ID) {
-        let tab = this.getTabByID(ID);
-        tab.model.dispose();
-        let settings = readJSON("fileSettings");
+        const closedTab = this.getTabByID(ID);
+        const isActive = this.activeTabID === ID;
+
         this.removeTabByID(ID);
-        settings.recentTabs = settings.recentTabs.filter(filePath => filePath != tab.filePath);
+        let settings = readJSON("fileSettings");
+        settings.recentTabs = settings.recentTabs.filter(filePath => filePath != closedTab.filePath);
         writeJSON("fileSettings", settings);
-        this.activeTabID = this.tabs.length > 0 ? this.tabs[0].ID : null;
-        if (!this.activeTabID) return;
-        tab = this.getTabByID(this.activeTabID);
-        this.editor.setModel(tab.model);
+
+        if (isActive && this.tabs.length > 0) {
+            const nextTab = this.tabs[0];
+            this.editor.setModel(nextTab.model);
+            this.activeTabID = nextTab.ID;
+        } else if (this.tabs.length === 0) {
+            this.editor.setModel(null);
+            this.activeTabID = null;
+        }
+
+        closedTab.model.dispose();
 
     }
 
