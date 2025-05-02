@@ -23,6 +23,7 @@
     --browser-element-color: grayscale(1) brightness(0.6) contrast(1.7);
     --tab-item-active: rgb(51, 53, 52);
     --tab-item-color: #333;
+    --help-description : #305b29;
   }
 
 
@@ -38,6 +39,7 @@
     --browser-element-color: grayscale(1) brightness(0.4) contrast(1.7);
     --tab-item-active: rgb(181, 189, 185);
     --tab-item-color: #dceadb;
+    --help-description : #305b29;
 
   }
 

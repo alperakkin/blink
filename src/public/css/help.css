@@ -29,9 +29,15 @@
     margin-left: 15px;
 }
 
+.help-description {
+    color: var(--help-description);
+}
+.help-item-description {
+    display: flex;
+}
 .collapse {
     overflow-y: auto;
-    height:300px;
+    height:500px;
     margin-top: 5px;
     border-bottom: solid 2px #2a362d;
 }
@@ -72,6 +78,7 @@
     width: 100%;
     margin-top: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 
 }
@@ -79,8 +86,21 @@
     font-size: 16px;
     color: var(--text-color);
     font-family: 'Roboto', sans-serif;
-    margin-left: 10px;
+    font-size: medium;
+    font-style: italic;
 
+
+}
+
+.help-img {
+    margin-top: 5px;
+    object-fit: contain;
+
+}
+
+.help-item-description {
+    display: flex;
+    flex-direction: column;
 }
 .help-item-select {
     font-family: 'Roboto', sans-serif;
@@ -89,6 +109,10 @@
     color: var(--text-color);
     font-size: 16px;
     width: 50%;
+}
+
+.description-text {
+    font-size: 12px;
 }
 
 .help-item-separator{

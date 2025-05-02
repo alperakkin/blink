@@ -191,6 +191,9 @@ class Parser {
         this.saveFile(filePath);
         this.codeEditor.closeFileHandler(this.codeEditor.activeTabID);
         this.setActiveTabID(this.codeEditor.activeTabID);
+
+        if (this.codeEditor.tabs.length === 0)
+            this.setActiveView(this.viewMap.WELCOME_VIEW);
     }
     focusCommand() {
         this.commandFocusRef.current.focus();
