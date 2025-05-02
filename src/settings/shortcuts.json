@@ -88,5 +88,13 @@
     "description": "blink.switch.to.next.tab",
     "command": "nextTab"
   },
-  "ctrl+h": { "description": "blink.help", "command": "help" }
+  "ctrl+h": { "description": "blink.help", "command": "help" },
+  "shift+arrowleft": {
+    "description": "blink.goto.previous.folder",
+    "command": "gotoPrevFolder"
+  },
+  "shift+arrowright": {
+    "description": "blink.goto.next.folder",
+    "command": "gotoNextFolder"
+  }
 }

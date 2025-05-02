@@ -32,7 +32,10 @@ class Parser {
             'runEditorAction': (action) => this.runEditorAction(action),
             'settings': () => this.displaySettings(),
             'zoom': (arg) => this.zoom(arg),
-            "help": () => this.help()
+            "help": () => this.help(),
+            "gotoPrevFolder": () => this.gotoPrevFolder(),
+            "gotoNextFolder": () => this.gotoNextFolder()
+
         }
 
 
@@ -99,6 +102,12 @@ class Parser {
         settings.cwd = this.cwd;
         writeJSON("fileSettings", settings);
 
+    }
+    gotoPrevFolder() {
+        this.gotoFolder("..");
+    }
+    gotoNextFolder() {
+        this.gotoFolder(this.prevCwd);
     }
 
     refresh() {

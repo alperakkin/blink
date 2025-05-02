@@ -18,11 +18,11 @@ const deleteFile = (parser) => {
 };
 
 const gotoPrevFolder = (parser) => {
-  parser.gotoFolder("..");
+  parser.gotoPrevFolder();
 };
 
 const gotoNextFolder = (parser) => {
-  parser.gotoFolder(parser.prevCwd);
+  parser.gotoNextFolder();
 };
 
 const renderFolderExplorer = (parser) => {
