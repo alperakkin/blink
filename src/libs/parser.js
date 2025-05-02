@@ -114,6 +114,10 @@ class Parser {
     }
 
     newFileOrFolder(filePath) {
+        if (!filePath) {
+            alert("Please define path or file name!");
+            return;
+        }
         const fullPath = path.join(this.cwd, filePath);
         if (path.extname(fullPath)) {
             window.electron.createFile(fullPath, "");

@@ -134,7 +134,7 @@ class CodeEditor {
 
     }
 
-    removeRecent
+
 
     closeFileHandler(ID) {
         let tab = this.getTabByID(ID);
