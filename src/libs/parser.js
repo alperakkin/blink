@@ -43,10 +43,24 @@ class Parser {
     }
 
     parseCmd(cmd) {
-        let args = cmd.split(" ");
-        let invokeCmd = this.keys[args[0].trim()];
+
+
+        const spaceIndex = cmd.indexOf(" ");
+        let cmdName, args;
+
+        if (spaceIndex === -1) {
+            cmdName = cmd.trim();
+            args = [];
+        } else {
+            cmdName = cmd.slice(0, spaceIndex).trim();
+            const rest = cmd.slice(spaceIndex + 1).trim();
+            args = [rest];
+        }
+
+
+        let invokeCmd = this.keys[cmdName];
         if (!invokeCmd) return;
-        invokeCmd(...args.slice(1));
+        invokeCmd(...args);
     }
 
     getHistory(state, cmd) {
