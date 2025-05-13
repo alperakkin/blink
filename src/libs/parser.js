@@ -164,10 +164,9 @@ class Parser {
         if (filePath === undefined || filePath === null) return;
         let settings = readJSON("fileSettings");
 
-        let result = window.electron.readFile(filePath);
-
-        if (result.exists === false)
-            result = window.electron.readFile(path.join(this.cwd, filePath));
+        if (filePath && !filePath.startsWith(this.cwd))
+            filePath = path.join(this.cwd, filePath);
+        const result = window.electron.readFile(filePath);
 
 
         if (result.exists === false) {
@@ -190,6 +189,8 @@ class Parser {
     }
 
     saveFile(filePath = null) {
+        if (filePath && !filePath.startsWith(this.cwd))
+            filePath = path.join(this.cwd, filePath);
         this.codeEditor.saveFileHandler(filePath);
         this.refresh();
 
