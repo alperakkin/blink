@@ -54,11 +54,21 @@ class CodeEditor {
 
 
     switchTabHandler(ID) {
+        if (this.activeTabID) {
+            const currentTab = this.getTabByID(this.activeTabID);
+            currentTab.position = this.editor.getPosition();
+        }
         const tab = this.getTabByID(ID);
         if (!tab) return;
         const model = tab.model;
         this.editor.setModel(model);
+        if (tab.position) {
+            this.editor.setPosition(tab.position);
+            this.editor.revealPositionInCenter(tab.position);
+        }
         this.activeTabID = ID;
+
+
 
 
 
@@ -97,7 +107,8 @@ class CodeEditor {
             name: fileName,
             filePath: filePath,
             model: model,
-            lastContent: source
+            lastContent: source,
+            position: null
         })
         this.editor.setModel(model);
         return ID;

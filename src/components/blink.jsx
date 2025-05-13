@@ -55,8 +55,6 @@ const Blink = () => {
       viewMap
     );
 
-    console.log(parserRef.current);
-
     if (firstRun.current == true) {
       parserRef.current.gotoFolder(fileSettings.cwd);
       let tabs = fileSettings.recentTabs || [];
