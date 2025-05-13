@@ -160,10 +160,15 @@ class Parser {
     }
 
     openFile(filePath) {
+
         if (filePath === undefined || filePath === null) return;
         let settings = readJSON("fileSettings");
 
-        const result = window.electron.readFile(filePath);
+        let result = window.electron.readFile(filePath);
+
+        if (result.exists === false)
+            result = window.electron.readFile(path.join(this.cwd, filePath));
+
 
         if (result.exists === false) {
             this.setActiveTabID(null);
@@ -207,7 +212,7 @@ class Parser {
 
         if (this.codeEditor.activeTabID == null) return;
         const tab = this.codeEditor.getTabByID(this.codeEditor.activeTabID);
-        console.log(tab);
+
         const filePath = tab.filePath;
         if (this.codeEditor.hasChanged(filePath)) {
             let userResponse = confirm(`Save ${filePath}?`);
