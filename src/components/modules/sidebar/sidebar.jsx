@@ -43,6 +43,7 @@ const FileManager = ({ files = [], parser }) => {
   return (
     <div className="file-manager">
       <div>{renderFolderExplorer(parser)}</div>
+      <div className="search-list-container"></div>
       <div className="file-list-container">
         {files.length > 0 ? (
           <ul className="file-list">

@@ -137,7 +137,11 @@ class CodeEditor {
     saveFileHandler(filePath = null) {
         const tab = this.getTabByID(this.activeTabID);
         if (!filePath && !tab) return;
-        filePath = filePath == null ? this.getTabByID(this.activeTabID).filePath : filePath;
+
+        if (!filePath)
+            filePath = tab.filePath;
+        else
+            filePath = path.join(path.dirname(tab.filePath), filePath);
         if (!filePath) return;
         const source = this.editor.getModel().getValue();
         window.electron.createFile(filePath, source);
