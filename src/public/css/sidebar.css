@@ -124,3 +124,30 @@
 
 }
 
+.search-container {
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.search-input-container {
+    font-size: small;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-bar {
+    margin-top: 5px;
+    height: 25px;
+}
+
+.search-result-item {
+    font-size: 14px;
+    color: var(--text-color-light);
+    margin-left: 5px;
+}
+

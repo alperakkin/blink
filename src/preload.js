@@ -65,6 +65,50 @@ contextBridge.exposeInMainWorld("electron", {
         }
 
         return checkGitBranch();
+    },
+    searchFiles: (mainDir, value) => {
+        function listFilesRecursive(dirPath) {
+            let results = [];
+
+            const list = fs.readdirSync(dirPath);
+            list.forEach((file) => {
+                const filePath = path.join(dirPath, file);
+                const stat = fs.statSync(filePath);
+
+                if (stat && stat.isDirectory()) {
+                    results = results.concat(listFilesRecursive(filePath));
+                } else {
+                    results.push(filePath);
+                }
+            });
+
+            return results;
+        }
+
+        function checkContent(paths, value) {
+            let results = [];
+            for (let fPath of paths) {
+                const lines = fs.readFileSync(fPath, 'utf-8').split("\n");
+                for (let line = 0; line < lines.length; line++) {
+
+                    const regex = new RegExp(`${value}(.*)$`);
+                    const match = lines[line].match(regex);
+                    if (match)
+                        results.push({
+                            index: line + 1,
+                            line: match[0],
+                            filePath: fPath
+                        })
+
+                }
+            }
+            return results;
+
+        }
+        const results = listFilesRecursive(mainDir);
+        return checkContent(results, value);
+
+
     }
 });
 

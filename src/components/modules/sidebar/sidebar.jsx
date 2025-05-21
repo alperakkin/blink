@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "public/css/sidebar.css";
 import fileIcons from "libs/fileicons";
 import renderFolderExplorer from "./folderbrowser";
@@ -6,6 +6,13 @@ import path from "path-browserify";
 
 const FileManager = ({ files = [], parser, isSearchActive }) => {
   const [highlightedFile, setHighlightedFile] = useState(null);
+  const [searchResults, setSearchResults] = useState(null);
+  const inputRef = useRef(null);
+  useEffect(() => {
+    if (isSearchActive && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isSearchActive]);
 
   const getFileIcon = (file) => {
     if (file.isDirectory)
@@ -16,6 +23,12 @@ const FileManager = ({ files = [], parser, isSearchActive }) => {
     ) : (
       <img src={fileIcons["defaultFile"]} className="file-icon" />
     );
+  };
+
+  const handleSearchResults = (e) => {
+    const value = e.target.value;
+    console.log(window.electron.searchFiles(parser.cwd, value));
+    setSearchResults(value);
   };
 
   const handleFileAndFolders = (file) => {
@@ -45,8 +58,17 @@ const FileManager = ({ files = [], parser, isSearchActive }) => {
     <div className="file-manager">
       <div>{renderFolderExplorer(parser)}</div>
       {isSearchActive && (
-        <div className="search-list-container">
-          <p>Search Results</p>
+        <div className="search-container">
+          <div className="search-input-container">
+            <label>Search</label>
+            <input
+              className="search-bar"
+              onChange={(e) => handleSearchResults(e)}
+              ref={inputRef}
+            ></input>
+          </div>
+          <div className="search-list-container"></div>
+          <p className="search-result-item">{searchResults}</p>
         </div>
       )}
 

@@ -24,6 +24,7 @@
     --tab-item-active: rgb(51, 53, 52);
     --tab-item-color: #333;
     --help-description : #305b29;
+    --text-color-light: #8c8b8b;
   }
 
 
@@ -40,6 +41,7 @@
     --tab-item-active: rgb(181, 189, 185);
     --tab-item-color: #dceadb;
     --help-description : #305b29;
+    --text-color-light: #514f4f;
 
   }
 
