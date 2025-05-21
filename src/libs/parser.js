@@ -4,12 +4,17 @@ import path from 'path-browserify';
 const MAX_HISTORY = 100;
 const MAX_RECENT_FOLDERS = 5;
 class Parser {
-    constructor(codeEditor, setFiles, setActiveTabID, setActiveView, recentFolders,
+    constructor(codeEditor, setFiles, setActiveTabID, setActiveView,
+        setSearchActive,
+        isSearchActive,
+        recentFolders,
         commandFocusRef, viewMap) {
         this.codeEditor = codeEditor;
         this.setFiles = setFiles;
         this.setActiveTabID = setActiveTabID;
         this.setActiveView = setActiveView;
+        this.setSearchActive = setSearchActive;
+        this.isSearchActive = isSearchActive;
         this.commandFocusRef = commandFocusRef;
         this.viewMap = viewMap;
         this.cwd = "/";
@@ -34,7 +39,8 @@ class Parser {
             'zoom': (arg) => this.zoom(arg),
             "help": () => this.help(),
             "gotoPrevFolder": () => this.gotoPrevFolder(),
-            "gotoNextFolder": () => this.gotoNextFolder()
+            "gotoNextFolder": () => this.gotoNextFolder(),
+            "search": () => this.search()
 
         }
 
@@ -270,6 +276,10 @@ class Parser {
             return;
         }
         this.setActiveView(this.viewMap.WELCOME_VIEW);
+    }
+
+    search() {
+        this.setSearchActive(true);
     }
 }
 

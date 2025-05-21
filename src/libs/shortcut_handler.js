@@ -15,12 +15,13 @@ class ShortCutHandler {
 
         let keys = [];
         if (e.ctrlKey) keys.push("ctrl");
-        if (e.metaKey) keys.push("meta");
+        if (e.metaKey) keys.push("command");
         if (e.altKey) keys.push("alt");
         if (e.shiftKey) keys.push("shift");
 
         const key = e.key.toLowerCase();
-        if (!["control", "shift", "alt", "meta"].includes(key)) {
+
+        if (!["control", "shift", "alt", "command", "meta"].includes(key)) {
             keys.push(key);
         }
 
@@ -34,6 +35,7 @@ class ShortCutHandler {
         this.keyMapping = readJSON("shortcuts");
         const hotkey = this.eventKeyToString(event);
         const hotKeyItem = this.keyMapping[hotkey];
+
         if (hotKeyItem) {
             event.preventDefault();
             if (!hotKeyItem.description.startsWith(EDITOR_SCRIPT)) {

@@ -96,5 +96,9 @@
   "shift+arrowright": {
     "description": "blink.goto.next.folder",
     "command": "gotoNextFolder"
+  },
+  "command+shift+f": {
+    "description": "blink.folder.search",
+    "command": "search"
   }
 }

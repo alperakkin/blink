@@ -32,6 +32,7 @@ const Blink = () => {
   const [activeTabID, setActiveTabId] = useState(null);
   const [activeView, setActiveView] = useState(viewMap.WELCOME_VIEW);
   const [activeSideBar, setActiveSideBar] = useState(viewMap.WELCOME_VIEW);
+  const [isSearchActive, setSearchActive] = useState(false);
 
   const firstRun = useRef(true);
 
@@ -50,6 +51,8 @@ const Blink = () => {
       setFiles,
       setActiveTabId,
       setActiveView,
+      setSearchActive,
+      isSearchActive,
       recentFolders,
       commandFocusRef,
       viewMap
@@ -83,7 +86,13 @@ const Blink = () => {
   return (
     <div className="container">
       <div className="editor">
-        {activeSideBar && <FileManager files={files} parser={parserInstance} />}
+        {activeSideBar && (
+          <FileManager
+            files={files}
+            parser={parserInstance}
+            isSearchActive={isSearchActive}
+          />
+        )}
         {
           <TabManager
             ref={editorRef}

@@ -4,8 +4,9 @@ import fileIcons from "libs/fileicons";
 import renderFolderExplorer from "./folderbrowser";
 import path from "path-browserify";
 
-const FileManager = ({ files = [], parser }) => {
+const FileManager = ({ files = [], parser, isSearchActive }) => {
   const [highlightedFile, setHighlightedFile] = useState(null);
+
   const getFileIcon = (file) => {
     if (file.isDirectory)
       return <img src={fileIcons["defaultFolder"]} className="file-icon" />;
@@ -43,16 +44,23 @@ const FileManager = ({ files = [], parser }) => {
   return (
     <div className="file-manager">
       <div>{renderFolderExplorer(parser)}</div>
-      <div className="search-list-container"></div>
-      <div className="file-list-container">
-        {files.length > 0 ? (
-          <ul className="file-list">
-            {files.map((file) => renderFiles(file))}
-          </ul>
-        ) : (
-          <p onClick={() => parser.gotoFolder("/")}></p>
-        )}
-      </div>
+      {isSearchActive && (
+        <div className="search-list-container">
+          <p>Search Results</p>
+        </div>
+      )}
+
+      {!isSearchActive && (
+        <div className="file-list-container">
+          {files.length > 0 ? (
+            <ul className="file-list">
+              {files.map((file) => renderFiles(file))}
+            </ul>
+          ) : (
+            <p onClick={() => parser.gotoFolder("/")}></p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
