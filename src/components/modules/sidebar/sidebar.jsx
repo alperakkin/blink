@@ -9,6 +9,9 @@ const FileManager = ({ files = [], parser, isSearchActive }) => {
   const [searchResults, setSearchResults] = useState(null);
   const inputRef = useRef(null);
   useEffect(() => {
+    if (!isSearchActive) {
+      setSearchResults(null);
+    }
     if (isSearchActive && inputRef.current) {
       inputRef.current.focus();
     }
@@ -27,8 +30,7 @@ const FileManager = ({ files = [], parser, isSearchActive }) => {
 
   const handleSearchResults = (e) => {
     const value = e.target.value;
-    console.log(window.electron.searchFiles(parser.cwd, value));
-    setSearchResults(value);
+    setSearchResults(window.electron.searchFiles(parser.cwd, value));
   };
 
   const handleFileAndFolders = (file) => {
@@ -39,6 +41,14 @@ const FileManager = ({ files = [], parser, isSearchActive }) => {
     else {
       parser.handleCommandSubmit(`open ${filePath}`);
     }
+  };
+
+  const openSearchResult = (file) => {
+    parser.setSearchActive(null);
+
+    let dir = path.dirname(file);
+    parser.handleCommandSubmit(`cd ${dir}`);
+    parser.handleCommandSubmit(`open ${file}`);
   };
 
   const renderFiles = (file) => {
@@ -54,6 +64,23 @@ const FileManager = ({ files = [], parser, isSearchActive }) => {
       </li>
     );
   };
+
+  const renderSearchResults = (res) => {
+    const name = path.basename(res.filePath);
+    const file = { name };
+    return (
+      <li
+        className="file-item"
+        key={path.basename(res.filePath) + res.index}
+        onClick={() => openSearchResult(res.filePath)}
+      >
+        {getFileIcon(file)}{" "}
+        {<span className="file-item-text">{path.basename(res.filePath)}</span>}{" "}
+        <div className="search-line">{res.line}</div>
+      </li>
+    );
+  };
+
   return (
     <div className="file-manager">
       <div>{renderFolderExplorer(parser)}</div>
@@ -68,7 +95,10 @@ const FileManager = ({ files = [], parser, isSearchActive }) => {
             ></input>
           </div>
           <div className="search-list-container"></div>
-          <p className="search-result-item">{searchResults}</p>
+          <ul className="search-list">
+            {searchResults &&
+              searchResults.map((res) => renderSearchResults(res))}
+          </ul>
         </div>
       )}
 

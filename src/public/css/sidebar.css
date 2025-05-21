@@ -145,9 +145,9 @@
     height: 25px;
 }
 
-.search-result-item {
-    font-size: 14px;
+.search-line {
+    font-size: 10px;
     color: var(--text-color-light);
-    margin-left: 5px;
+    position: relative;
+    margin-top: 5px;
 }
-
